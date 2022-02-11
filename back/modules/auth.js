@@ -1,16 +1,18 @@
-module.exports.isAuthorized  = function(req, res, next) {
+import pkg from '@prisma/client';
 
-    User.findById(req.session.userId).exec(function (error, user) {
-        if (error) {
-            return next(error);
-        } else {      
-            if (user === null) {     
-                var err = new Error('Not authorized! Go back!');
-                err.status = 400;
-                return next(err);
-            } else {
-                return next();
-            }
-        }
-    });
+const { PrismaClient } = pkg;
+const prisma = new PrismaClient();
+
+export const isAuth  = async (req) => {
+
+    try {
+        return await prisma.user.findUnique({
+            where: { id: req },
+        
+        });
+    } catch (error) {
+        return null;
+    }
 }
+
+export default isAuth
