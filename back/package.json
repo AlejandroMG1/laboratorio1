@@ -11,7 +11,7 @@
   "type": "module",
   "devDependencies": {
     "nodemon": "^2.0.15",
-    "prisma": "^3.8.1"
+    "prisma": "^3.9.1"
   },
   "scripts": {
     "dev": "nodemon index.js"

@@ -9,3 +9,87 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Enterprise {
+  id       String    @id @default(cuid())
+  name     String
+  projects Project[]
+  users    User[]
+}
+
+model Project {
+  id                 String     @id @default(cuid())
+  name               String
+  description        String
+  clientEnterprise   Enterprise @relation(fields: [clientEnterpriseId], references: [id])
+  clientEnterpriseId String
+  issues             Issue[]
+  clients            User[]     @relation("ClientsProject")
+  developers         User[]     @relation("developerProject")
+}
+
+model Issue {
+  id            String             @id @default(cuid())
+  description   String
+  category      Enum_IssueType
+  priority      Enum_IssuePriority
+  status        Enum_IssueStatus   @default(NotAssigned)
+  hourEstimate  Int?
+  dueDate       DateTime
+  closeDate     DateTime?
+  projectId     String
+  project       Project            @relation(fields: [projectId], references: [id])
+  IssueComments IssueComment[]
+  developerId   String?
+  developer     User?               @relation(fields: [developerId], references: [id])
+}
+
+enum Enum_IssueType {
+  MissingTask
+  Bug
+  Additional
+}
+
+enum Enum_IssuePriority {
+  Low
+  Medium
+  High
+}
+
+enum Enum_IssueStatus {
+  NotAssigned
+  Assigned
+  Estimated
+  InternalValidation
+  ClientValidation
+  Closed
+  Abandoned
+}
+
+model User {
+  id                String         @id @default(cuid())
+  email             String         @unique
+  enterpriseId      String?
+  enterprise        Enterprise?    @relation(fields: [enterpriseId], references: [id])
+  role              Enum_Role
+  comments          IssueComment[]
+  clientProjects    Project[]      @relation("ClientsProject")
+  developerProjects Project[]      @relation("developerProject")
+  Issues            Issue[]
+
+}
+
+enum Enum_Role {
+  Administrador
+  Desarrollador
+  Cliente
+}
+
+model IssueComment {
+  id          String @id @default(cuid())
+  comment     String
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+  issueId     String
+  issue       Issue  @relation(fields: [issueId], references: [id])
+}
