@@ -57,7 +57,8 @@ const App = () => {
           )}
           <Route path='CrearProyecto' element={<FormProyecto />} />
           <Route path='CrearUsuario' element={<CrearUsuario />} />
-          <Route path='/FormIssue/:id' element={<FormIssue />} />
+          <Route path='/CrearIssue/' element={<FormIssue />} />
+          <Route path='/CrearIssue/:id' element={<FormIssue />} />
           <Route path='Proyectos' element={<Proyectos />} />
           <Route path='Issues' element={<Issues />} />
           <Route path='Issues/DetallesIssue/:id' element={<DetallesIssue />} />
