@@ -7,10 +7,9 @@ export const getAllIssuesByProyect = async (id, user) => {
     url: `http://localhost:4000/projectIssues/${id}`,
     headers: { 'Content-type': 'application/json', user },
   };
-
-  console.log('okaaaa');
   const respuesta = await axios.request(options);
-  return respuesta.data.issues;
+  console.log(respuesta);
+  return respuesta.data;
 };
 
 export const getAllIssuesByUser = async (user) => {
@@ -32,5 +31,6 @@ export const getAllIssues = async (user) => {
   };
 
   const respuesta = await axios.request(options);
-  return respuesta.data.issues;
+  console.log(respuesta);
+  return respuesta;
 };
