@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 const rutasUser = express.Router();
 
-rutasUser.route('/users/enterprise/:enterpriseId').get(async (req, res) => {  
+rutasUser.route('/users/:enterpriseId').get(async (req, res) => {  
   const currUser = auth.isAuth(req.headers.user);
   currUser.then(async (loggedUser)=>{
     if (loggedUser && loggedUser.role === 'Cliente') {
@@ -16,6 +16,24 @@ rutasUser.route('/users/enterprise/:enterpriseId').get(async (req, res) => {
         const usuarios = await prisma.user.findMany({
           where: {enterpriseId: `${req.params.enterpriseId}`}
         });
+        res.status(200).json({ usuarios });
+      } catch (err) {
+        res.status(500).send({ status: 'error obteniendo' });
+      }
+    } else {
+      res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
+    }
+  }).catch(() => {
+    res.status(404).send({ status: 'error logged user' });
+  })
+});
+
+rutasUser.route('/users').get(async (req, res) => {  
+  const currUser = auth.isAuth(req.headers.user);
+  currUser.then(async (loggedUser)=>{
+    if (loggedUser && loggedUser.role === 'Administrador') {
+      try {
+        const usuarios = await prisma.user.findMany();
         res.status(200).json({ usuarios });
       } catch (err) {
         res.status(500).send({ status: 'error obteniendo' });
@@ -43,7 +61,8 @@ rutasUser.route('/user').post(async (req, res) => {
         });
     
         res.status(201).send({ status: 'ok', empleado: nuevoEmpleado});
-      } catch {
+      } catch(err) {
+        console.log(err)
         res.status(500).send({ status: 'error' });
       }
     }else{ 

@@ -13,8 +13,8 @@ const BaseForm = ({ title, onSubmit, titleSubmit, children, onCancelar }) => (
         className='flex flex-col items-center px-10 w-full pb-10'
       >
         {children}
-        <ButtonForm text={titleSubmit} type='submit' />
-        <ButtonForm text='Cancelar' type='button' onclick={onCancelar} />
+        <ButtonForm text={titleSubmit} submit />
+        <ButtonForm text='Cancelar' submit={false} onclick={onCancelar} />
       </form>
     </div>
   </div>

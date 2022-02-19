@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CrearEmpresa from 'pages/empresa/CrearEmpresa';
 import FormProyecto from 'pages/proyecto/FormProyecto';
-import CrearUsuario from 'pages/usuario/CrearUsuario';
+import FormUsuario from 'pages/usuario/FormUsuario';
 import FormIssue from 'pages/issue/FormIssue';
 import LoginForm from 'pages/Login';
 import Proyectos from 'pages/proyecto/Proyectos';
@@ -56,9 +56,9 @@ const App = () => {
             <Route path='CrearEmpresa' element={<CrearEmpresa />} />
           )}
           <Route path='CrearProyecto' element={<FormProyecto />} />
-          <Route path='CrearUsuario' element={<CrearUsuario />} />
-          <Route path='/CrearIssue/' element={<FormIssue />} />
-          <Route path='/CrearIssue/:id' element={<FormIssue />} />
+          <Route path='CrearUsuario' element={<FormUsuario />} />
+          <Route path='CrearIssue/' element={<FormIssue />} />
+          <Route path='CrearIssue/:id' element={<FormIssue />} />
           <Route path='Proyectos' element={<Proyectos />} />
           <Route path='Issues' element={<Issues />} />
           <Route path='Issues/DetallesIssue/:id' element={<DetallesIssue />} />

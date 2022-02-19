@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-const { default: axios } = require('axios');
+import axios from 'axios';
 
 export const getAllProyectos = async (user) => {
   const options = {
