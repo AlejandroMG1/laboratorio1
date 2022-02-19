@@ -1,13 +1,12 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import Input from 'components/Input';
-import Select from 'react-select';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { getAllEmpresas } from 'servicios/empresa';
 import { crearProyecto } from 'servicios/proyecto';
 import { auth } from 'servicios/auth';
 import BaseForm from 'components/BaseForm';
+import SelectForm from 'components/SelectForm';
 
 const FormProyecto = () => {
   const navigate = useNavigate();
@@ -30,10 +29,7 @@ const FormProyecto = () => {
     e.preventDefault();
 
     try {
-      const res = await crearProyecto(
-        { nombre, empresa, descripción },
-        auth.id
-      );
+      await crearProyecto({ nombre, empresa, descripción }, auth.id);
       toast.success('Proyecto creado');
       navigate('/Proyectos');
     } catch {
@@ -46,6 +42,9 @@ const FormProyecto = () => {
       title='Nuevo Proyecto'
       onSubmit={onSubmit}
       titleSubmit='Crear proyecto'
+      onCancelar={() => {
+        navigate('/Proyectos');
+      }}
     >
       <Input
         text='Nombre'
@@ -57,18 +56,14 @@ const FormProyecto = () => {
           setNombre(e.target.value);
         }}
       />
-      <div className='w-full'>
-        <span className='block text-gray-700 text-lg font-bold mb-2 ml-6'>
-          Empresa
-        </span>
-        <Select
-          className='block border border-grey-light w-full rounded mb-4'
-          options={optionsEmpresa}
-          onChange={(e) => {
-            setEmpresa(e.value);
-          }}
-        />
-      </div>
+
+      <SelectForm
+        title='Empresa'
+        options={optionsEmpresa}
+        onChange={(e) => {
+          setEmpresa(e.value);
+        }}
+      />
 
       <div className='w-full'>
         <span className='block text-gray-700 text-lg font-bold mb-2 ml-6'>
