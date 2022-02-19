@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 
-export const getAllIssuesByProyect = async (id) => {
+export const getAllIssuesByProyect = async (id, user) => {
   const options = {
     method: 'GET',
     url: `http://localhost:4000/projectIssues/${id}`,
-    headers: { 'Content-type': 'application/json', user: 'sfgb' },
+    headers: { 'Content-type': 'application/json', user },
   };
 
   console.log('okaaaa');
@@ -13,23 +13,22 @@ export const getAllIssuesByProyect = async (id) => {
   return respuesta.data.issues;
 };
 
-export const getAllIssuesByUser = async (id) => {
+export const getAllIssuesByUser = async (user) => {
   const options = {
     method: 'GET',
     url: 'http://localhost:4000/issues',
-    headers: { 'Content-type': 'application/json' },
-    data: id,
+    headers: { 'Content-type': 'application/json', user },
   };
 
   const respuesta = await axios.request(options);
   return respuesta.data.issues;
 };
 
-export const getAllIssues = async () => {
+export const getAllIssues = async (user) => {
   const options = {
     method: 'GET',
     url: 'http://localhost:4000/issue',
-    headers: { 'Content-type': 'application/json', user: 'sfgb' },
+    headers: { 'Content-type': 'application/json', user },
   };
 
   const respuesta = await axios.request(options);

@@ -8,6 +8,7 @@ import {
   getAllIssuesByProyect,
   getAllIssuesByUser,
 } from 'servicios/issues';
+import { auth } from 'servicios/auth';
 
 const Issues = ({ opt, id }) => {
   const [issues, getIssues] = useState([]);
@@ -15,13 +16,13 @@ const Issues = ({ opt, id }) => {
   useEffect(() => {
     switch (opt) {
       case 1:
-        getIssues(getAllIssuesByProyect(id));
+        getIssues(getAllIssuesByProyect(id, auth.id));
         break;
       case 2:
-        getIssues(getAllIssuesByUser(id));
+        getIssues(getAllIssuesByUser(id, auth.id));
         break;
       default:
-        getIssues(getAllIssues());
+        getIssues(getAllIssues(auth.id));
     }
   }, []);
 

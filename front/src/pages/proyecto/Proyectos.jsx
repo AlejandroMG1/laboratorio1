@@ -3,12 +3,13 @@ import ItemProyecto from 'components/ItemProyecto';
 import { Link } from 'react-router-dom';
 import { getAllProyectos } from 'servicios/proyecto';
 import CabeceraList from 'components/CabeceraList';
+import { auth } from 'servicios/auth';
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState([]);
 
   useEffect(async () => {
-    setProyectos(await getAllProyectos());
+    setProyectos(await getAllProyectos(auth.id));
   }, []);
 
   return (

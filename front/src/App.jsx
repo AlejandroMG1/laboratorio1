@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CrearEmpresa from 'pages/empresa/CrearEmpresa';
 import FormProyecto from 'pages/proyecto/FormProyecto';
 import CrearUsuario from 'pages/usuario/CrearUsuario';
-import CrearIssue from 'pages/issue/CrearIssue';
+import FormIssue from 'pages/issue/FormIssue';
 import LoginForm from 'pages/Login';
 import Proyectos from 'pages/proyecto/Proyectos';
 import PublicLayout from 'layouts/PublicLayout';
@@ -15,6 +15,7 @@ import 'styles/globals.css';
 import Issues from 'pages/issue/Issues';
 import Usuarios from 'pages/usuario/Usuarios';
 import DetallesProyecto from 'pages/proyecto/DetallesProyecto';
+import { getAuthData } from 'servicios/auth';
 
 async function login(data) {
   return fetch('http://localhost:4000/login', {
@@ -36,6 +37,7 @@ const App = () => {
     login({ email }).then((response) => {
       if (response.status === 'ok') {
         setAuth(response.user);
+        getAuthData(response.user);
       } else {
         setError('Usuario no valido');
       }
@@ -54,7 +56,7 @@ const App = () => {
           )}
           <Route path='CrearProyecto' element={<FormProyecto />} />
           <Route path='CrearUsuario' element={<CrearUsuario />} />
-          <Route path='CrearIssue' element={<CrearIssue />} />
+          <Route path='CrearIssue' element={<FormIssue />} />
           <Route path='Proyectos' element={<Proyectos />} />
           <Route path='Issues' element={<Issues />} />
           <Route path='Usuarios' element={<Usuarios />} />
