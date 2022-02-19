@@ -17,7 +17,7 @@ const Proyectos = () => {
       <div className='flex flex-col w-full gap-[2px] px-2 py-10'>
         <div className=' flex flex-row items-center w-full h-[50px] px-3 justify-between'>
           <span>Nombre de proyecto</span>
-          <span className='fixed left-[800px]'>Empresa</span>
+          <span className='left-[800px]'>Empresa</span>
           <div className='flex flex-row justify-between items-center w-[450px] pr-20'>
             <span>Issues</span>
             <span>Develop</span>

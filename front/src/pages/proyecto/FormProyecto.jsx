@@ -1,4 +1,3 @@
-/* eslint-disable spaced-comment */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import Input from 'components/Input';
@@ -16,14 +15,14 @@ const FormProyecto = () => {
   const [empresa, setEmpresa] = useState('');
   const [descripción, setDescripción] = useState('');
 
-  useEffect(() => {
-    //setoptionsEmpresa(getAllEmpresas());
-    setoptionsEmpresa([
-      { value: 'ckzhjabhl0047acrnwr5ila83', label: 'Empresa1' },
-      { value: '2', label: 'Empresa2' },
-      { value: '3', label: 'Empresa3' },
-      { value: '4', label: 'Empresa4' },
-    ]);
+  useEffect(async () => {
+    const res = await getAllEmpresas();
+    setoptionsEmpresa(
+      res.map((empresaItem) => ({
+        value: empresaItem.id,
+        label: empresaItem.name,
+      }))
+    );
   }, []);
 
   const onSubmit = async (e) => {

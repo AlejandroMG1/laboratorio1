@@ -52,16 +52,16 @@ const App = () => {
           {auth.role === 'Administrador' && (
             <Route path='CrearEmpresa' element={<CrearEmpresa />} />
           )}
-           <Route path='CrearProyecto' element={<FormProyecto />} />
-        <Route path='CrearUsuario' element={<CrearUsuario />} />
-        <Route path='CrearIssue' element={<CrearIssue />} />
-        <Route path='Proyectos' element={<Proyectos />} />
-        <Route path='Issues' element={<Issues />} />
-        <Route path='Usuarios' element={<Usuarios />} />
-        <Route
-          path='Proyectos/DetallesProyecto/:id'
-          element={<DetallesProyecto />}
-        />
+          <Route path='CrearProyecto' element={<FormProyecto />} />
+          <Route path='CrearUsuario' element={<CrearUsuario />} />
+          <Route path='CrearIssue' element={<CrearIssue />} />
+          <Route path='Proyectos' element={<Proyectos />} />
+          <Route path='Issues' element={<Issues />} />
+          <Route path='Usuarios' element={<Usuarios />} />
+          <Route
+            path='Proyectos/DetallesProyecto/:id'
+            element={<DetallesProyecto />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

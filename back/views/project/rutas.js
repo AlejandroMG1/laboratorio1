@@ -28,7 +28,8 @@ rutasProject.route('/projects').get(async (req, res) => {
 });
 
 rutasProject.route('/projectById').get(async (req, res) => {
-  const {proyectoId} = req.body;
+  const proyectoId='ckzskehrx0120z8rnl04hb9ad'
+  //const {proyectoId} = req.body;
   const currUser = auth.isAuth(req.headers.user);
   currUser.then(async (loggedUser)=>{
     if (loggedUser && loggedUser.role === 'Administrador') {

@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 const { default: axios } = require('axios');
 
 export const getAllProyectos = async () => {
   const options = {
     method: 'GET',
-    url: 'http://localhost:4000/project',
+    url: 'http://localhost:4000/projects',
     headers: { 'Content-type': 'application/json', user: 'sfgb' },
   };
 
@@ -11,12 +12,12 @@ export const getAllProyectos = async () => {
   return respuesta.data.proyectos;
 };
 
-export const getbyidProyecto = async (id) => {
+export const getbyidProyecto = async (proyectoId) => {
   const options = {
     method: 'GET',
-    url: 'http://localhost:4000/proyectos',
+    url: 'http://localhost:4000/projectById',
     headers: { 'Content-type': 'application/json', user: 'sfgb' },
-    data: id,
+    data: { proyectoId },
   };
 
   const respuesta = await axios.request(options);

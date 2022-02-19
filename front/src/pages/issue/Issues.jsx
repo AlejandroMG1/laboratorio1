@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import ItemIssue from 'components/ItemIssue';
 import CabeceraList from 'components/CabeceraList';
@@ -40,9 +42,9 @@ const Issues = ({ opt, id }) => {
         <div className=' flex items-center rounded-md border-colorNegro border-2 w-full h-[50px] px-3'>
           <span>Adregar Issue</span>
         </div>
-        {issues.map((issue) => (
+        {/* {issues.map((issue) => (
           <ItemIssue issue={issue} />
-        ))}
+        ))} */}
       </div>
     </div>
   );
