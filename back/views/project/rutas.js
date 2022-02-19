@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 const rutasProject = express.Router();
 
-rutasProject.route('/project').get(async (req, res) => {
+rutasProject.route('/projects').get(async (req, res) => {
   const currUser = auth.isAuth(req.headers.user);
   currUser.then(async (loggedUser)=>{
     if (loggedUser && loggedUser.role === 'Administrador') {
