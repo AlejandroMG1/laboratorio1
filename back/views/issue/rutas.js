@@ -108,7 +108,8 @@ rutasIssue.route("/issue:id").patch(async (req, res) => {
   auth
     .isAuth(req.headers.user)
     .then(async (user) => {
-      const { issue } = req.body;
+      const { id } = req.params;
+      const issue = await prisma.issue.findUnique({ where: { id: id } });
       let allowedStatus = [];
       let allowUpdateStatus = false;
       switch (user.role) {
@@ -187,7 +188,7 @@ rutasIssue.route("/issue:id").patch(async (req, res) => {
 
 rutasIssue.route("/projectIssues/:id").get(async (req, res) => {
   const user = await auth.isAuth(req.headers.user);
-  
+
   if (!user) {
     return res
       .status(401)
