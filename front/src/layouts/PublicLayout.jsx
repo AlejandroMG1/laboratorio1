@@ -5,14 +5,17 @@ import { ToastContainer } from 'react-toastify';
 import Navbar from '../components/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
 
-const PublicLayout = () => (
-  <div className='w-full flex flex-col'>
-    <Navbar />
-    <div className='h-full'>
-      <Outlet />
-      <ToastContainer />
+const PublicLayout = (props) => {
+  const { user } = props;
+  return (
+    <div className='w-full flex flex-col'>
+      <Navbar user={user} />
+      <div className='h-full'>
+        <Outlet />
+        <ToastContainer />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default PublicLayout;

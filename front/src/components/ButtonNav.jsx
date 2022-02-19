@@ -19,7 +19,11 @@ const ButtonNav = ({ title, names, rutas }) => {
       <Dropdown renderToggle={prueba} title='dos' trigger='hover'>
         <Dropdown.Item>
           {names.map((name, index) => (
-            <DropdownItem ruta={rutas[index]} name={name} />
+            <DropdownItem
+              key={`${index + 1}`}
+              ruta={rutas[index]}
+              name={name}
+            />
           ))}
         </Dropdown.Item>
       </Dropdown>

@@ -8,6 +8,49 @@ const prisma = new PrismaClient();
 
 const rutasEnterprise = express.Router();
 
+rutasEnterprise.route('/getAllEnterprises').get(async (req, res) => {
+  const currUser = auth.isAuth(req.headers.user);
+  currUser.then(async (loggedUser)=>{
+    if (loggedUser && loggedUser.role === 'Administrador') {
+      try {    
+        const empresas = await prisma.enterprise.findMany();
+    
+        res.status(201).send({ status: 'ok', empresas});
+      } catch {
+        res.status(500).send({ status: 'error' });
+      }
+    } else{ 
+      res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
+    }
+  }).catch((err) => {
+    res.status(404).send({ status: 'error' });
+  })
+});
+
+rutasEnterprise.route('/enterpriseById').get(async (req, res) => {
+  const {enterpriseId} = req.body;
+  const currUser = auth.isAuth(req.headers.user);
+  currUser.then(async (loggedUser)=>{
+    if (loggedUser && loggedUser.role === 'Administrador') {
+      try {    
+        const empresa = await prisma.enterprise.findUnique({
+          where: {
+            id: enterpriseId
+          }
+        });
+    
+        res.status(201).send({ status: 'ok', empresa});
+      } catch {
+        res.status(500).send({ status: 'error' });
+      }
+    } else{ 
+      res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
+    }
+  }).catch((err) => {
+    res.status(404).send({ status: 'error' });
+  })
+});
+
 rutasEnterprise.route('/enterprise').post(async (req, res) => {
   const {enterprise, user} = req.body;
   const currUser = auth.isAuth(req.headers.user);

@@ -1,14 +1,19 @@
 /* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-restricted-imports */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import useFormData from 'hooks/useFormData';
 import Input from 'components/Input';
 import logo from 'assets/2.svg';
 
-const Login = () => {
+const LoginForm = ({ Login, error }) => {
   const { form, updateFormData } = useFormData();
 
   const submitForm = (e) => {
     e.preventDefault();
+    Login(form.current[0].value);
   };
 
   return (
@@ -38,4 +43,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;
