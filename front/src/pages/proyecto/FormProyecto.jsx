@@ -1,89 +1,41 @@
 /* eslint-disable spaced-comment */
-/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import Input from 'components/Input';
 import ButtonForm from 'components/ButtonForm';
-import Select from 'react-select'
-import axios from 'axios';
+import Select from 'react-select';
 import { toast } from 'react-toastify';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { getAllEmpresas } from 'servicios/empresa';
+import { crearProyecto } from 'servicios/proyecto';
 
-const FormProyecto = ({crearForm}) => {
-  const navigate=useNavigate();
+const FormProyecto = () => {
+  const navigate = useNavigate();
   const [optionsEmpresa, setoptionsEmpresa] = useState([]);
   const [nombre, setNombre] = useState('');
   const [empresa, setEmpresa] = useState('');
   const [descripción, setDescripción] = useState('');
 
-
   useEffect(() => {
-   
+    //setoptionsEmpresa(getAllEmpresas());
     setoptionsEmpresa([
-      { value: '1', label: 'Empresa1' },
+      { value: 'ckzhjabhl0047acrnwr5ila83', label: 'Empresa1' },
       { value: '2', label: 'Empresa2' },
       { value: '3', label: 'Empresa3' },
       { value: '4', label: 'Empresa4' },
     ]);
   }, []);
 
-  const getAllEmpresas = async () => {
-    const options = {
-      method: 'GET',
-      url: 'http://localhost:4000/Empresas',
-      headers: { 'Content-type': 'application/json' },
-    };
-
-    const respuesta = await axios.request(options);
-    setoptionsEmpresa(respuesta.data.Empresas);
-  };
-
-  const crearProyecto = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    
-    const options = {
-      method: 'POST',
-      url: 'http://localhost:4000/project',
-      headers: { 'Content-type': 'application/json' },
-      data: {
-        name: nombre,
-        clientEnterpriseId: empresa,
-        description: descripción
 
-      }
-    };
-
-    try{
-      //await axios.request(options);
-      toast.success('Proyecto creado')
-      navigate('/Proyectos') 
-    } catch{
-      toast.error('Error')
+    try {
+      const res = await crearProyecto({ nombre, empresa, descripción });
+      toast.success('Proyecto creado');
+      navigate('/Proyectos');
+    } catch {
+      toast.error('Error');
     }
-
-  };
-
-  
-
-
-  const modificarProyecto = async(e) => {
-    e.preventDefault();
-    const options = {
-      method: 'POST',
-      url: 'http://localhost:4000/project',
-      headers: { 'Content-type': 'application/json' },
-      data: {
-        name: nombre,
-        clientEnterpriseId: empresa,
-        description: descripción
-
-      }
-    };
-    await axios.request(options);
   };
 
   return (
@@ -94,47 +46,51 @@ const FormProyecto = ({crearForm}) => {
         </h1>
 
         <form
-          onSubmit={crearProyecto}
+          onSubmit={onSubmit}
           className='flex flex-col items-center px-10 w-full pb-10'
         >
-
           <Input
             text='Nombre'
             name='nombre'
             placeholder='Ingresa nombre de la empresa'
             type='text'
             value={nombre}
-            onChange={e => { setNombre(e.target.value) }}
+            onChange={(e) => {
+              setNombre(e.target.value);
+            }}
           />
           <div className='w-full'>
-            <label
-              className='block text-gray-700 text-lg font-bold mb-2 ml-6'
-              htmlFor='Empresa'
-            >
+            <span className='block text-gray-700 text-lg font-bold mb-2 ml-6'>
               Empresa
-            </label>
-            <Select className='block border border-grey-light w-full rounded mb-4' options={optionsEmpresa} onChange={e => { setEmpresa(e.value) }} />
-
+            </span>
+            <Select
+              className='block border border-grey-light w-full rounded mb-4'
+              options={optionsEmpresa}
+              onChange={(e) => {
+                setEmpresa(e.value);
+              }}
+            />
           </div>
 
           <div className='w-full'>
-
-            <label
-              className='block text-gray-700 text-lg font-bold mb-2 ml-6'
-              htmlFor='Descripción'
-            >
+            <span className='block text-gray-700 text-lg font-bold mb-2 ml-6'>
               Descripción
-            </label>
-            <textarea className='block border border-grey-light w-full p-3 rounded mb-4'
-              name="Descripción" rows="10" placeholder='Descripción' value={descripción} onChange={(e) => { setDescripción(e.target.value) }}></textarea>
-
+            </span>
+            <textarea
+              className='block border border-grey-light w-full p-3 rounded mb-4'
+              name='Descripción'
+              rows='10'
+              placeholder='Descripción'
+              value={descripción}
+              onChange={(e) => {
+                setDescripción(e.target.value);
+              }}
+            />
           </div>
           <ButtonForm text='Crear proyecto' />
         </form>
       </div>
-
     </div>
-
   );
 };
 
