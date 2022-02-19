@@ -16,6 +16,7 @@ import Issues from 'pages/issue/Issues';
 import Usuarios from 'pages/usuario/Usuarios';
 import DetallesProyecto from 'pages/proyecto/DetallesProyecto';
 import { getAuthData } from 'servicios/auth';
+import DetallesIssue from 'pages/issue/DetallesIssue';
 
 async function login(data) {
   return fetch('http://localhost:4000/login', {
@@ -56,9 +57,10 @@ const App = () => {
           )}
           <Route path='CrearProyecto' element={<FormProyecto />} />
           <Route path='CrearUsuario' element={<CrearUsuario />} />
-          <Route path='CrearIssue' element={<FormIssue />} />
+          <Route path='/FormIssue/:id' element={<FormIssue />} />
           <Route path='Proyectos' element={<Proyectos />} />
           <Route path='Issues' element={<Issues />} />
+          <Route path='Issues/DetallesIssue/:id' element={<DetallesIssue />} />
           <Route path='Usuarios' element={<Usuarios />} />
           <Route
             path='Proyectos/DetallesProyecto/:id'

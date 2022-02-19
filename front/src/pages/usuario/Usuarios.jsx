@@ -31,7 +31,7 @@ const Usuarios = () => (
         </div>
       </div>
       <div className=' flex items-center rounded-md border-colorNegro border-2 w-full h-[50px] px-3'>
-        <span>Adregar Usuario</span>
+        <span>Agregar Usuario</span>
       </div>
       <ItemUsuario
         usuario={{

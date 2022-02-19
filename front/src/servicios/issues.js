@@ -8,7 +8,6 @@ export const getAllIssuesByProyect = async (id, user) => {
     headers: { 'Content-type': 'application/json', user },
   };
   const respuesta = await axios.request(options);
-  console.log(respuesta);
   return respuesta.data;
 };
 
@@ -31,6 +30,5 @@ export const getAllIssues = async (user) => {
   };
 
   const respuesta = await axios.request(options);
-  console.log(respuesta);
-  return respuesta;
+  return respuesta.data.issues;
 };

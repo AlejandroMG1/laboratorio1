@@ -38,7 +38,7 @@ rutasIssue.route("/issue").get(async (req, res) => {
           });
           break;
       }
-      res.status(200).send({ issues });
+      res.status(200).send({issues});
     })
     .catch((err) => {
       res
