@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const { default: axios } = require('axios');
 
 export const getAllProyectos = async () => {
@@ -9,8 +8,19 @@ export const getAllProyectos = async () => {
   };
 
   const respuesta = await axios.request(options);
-  console.log(respuesta.data.proyectos);
   return respuesta.data.proyectos;
+};
+
+export const getbyidProyecto = async (id) => {
+  const options = {
+    method: 'GET',
+    url: 'http://localhost:4000/proyectos',
+    headers: { 'Content-type': 'application/json', user: 'sfgb' },
+    data: id,
+  };
+
+  const respuesta = await axios.request(options);
+  return respuesta.data.proyecto;
 };
 
 export const crearProyecto = async (proyecto) => {

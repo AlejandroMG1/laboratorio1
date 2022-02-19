@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ItemProyecto from 'components/ItemProyecto';
 import { Link } from 'react-router-dom';
 import { getAllProyectos } from 'servicios/proyecto';
+import CabeceraList from 'components/CabeceraList';
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -12,19 +13,7 @@ const Proyectos = () => {
 
   return (
     <div className='flex flex-col pt-8 px-16  w-full'>
-      <div className='flex justify-between w-full items-center'>
-        <span className='block text-2xl font-bold'>Proyectos</span>
-        <div className='flex flex-row items-center gap-4'>
-          <span className='block text-gray-700 text-xl font-bold'>Buscar</span>
-
-          <input
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            name='Buscar'
-            type='search'
-            placeholder='Proyecto'
-          />
-        </div>
-      </div>
+      <CabeceraList title='Proyectos' placeholder='proyecto' />
       <div className='flex flex-col w-full gap-[2px] px-2 py-10'>
         <div className=' flex flex-row items-center w-full h-[50px] px-3 justify-between'>
           <span>Nombre de proyecto</span>

@@ -26,11 +26,11 @@ const FormProyecto = () => {
     ]);
   }, []);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = crearProyecto({ nombre, empresa, descripción });
+      const res = await crearProyecto({ nombre, empresa, descripción });
       toast.success('Proyecto creado');
       navigate('/Proyectos');
     } catch {
