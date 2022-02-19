@@ -11,7 +11,7 @@ import {
 import { auth } from 'servicios/auth';
 
 const Issues = ({ opt, id }) => {
-  const [issues, getIssues] = useState([]);
+  const [issues, setIssues] = useState([]);
 
   useEffect(() => {
     switch (opt) {
@@ -25,6 +25,11 @@ const Issues = ({ opt, id }) => {
         getIssues(getAllIssues(auth.id));
     }
   }, []);
+
+  const getProjectIssues = async () => {
+    setIssues(await getAllIssuesByProyect(id));
+    console.log(issues);
+  };
 
   return (
     <div className='flex flex-col pt-8 px-16  w-full'>

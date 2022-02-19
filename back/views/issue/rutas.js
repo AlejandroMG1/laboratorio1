@@ -195,17 +195,13 @@ rutasIssue.route("/projectIssues/:id").get(async (req, res) => {
   }
   try {
     const { id } = req.params;
-    console.log(id);
     const issues = await prisma.issue.findMany({
       where: {
         projectId: id,
       },
     });
-
-    console.log(issues)
-    console.log('aaaa')
-    res.status(200).send(issues);
-  } catch (err) {console.log(err)}
+    return res.status(200).send(issues);
+  } catch (err) {}
 });
 
 export { rutasIssue };
