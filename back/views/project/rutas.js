@@ -13,7 +13,11 @@ rutasProject.route('/projects').get(async (req, res) => {
   currUser.then(async (loggedUser)=>{
     if (loggedUser && loggedUser.role === 'Administrador') {
       try {    
-        const proyectos = await prisma.project.findMany();
+        const proyectos = await prisma.project.findMany({
+          include: {
+            clientEnterprise:true,
+          }
+        });
     
         res.status(201).send({ status: 'ok', proyectos});
       } catch {
@@ -27,17 +31,13 @@ rutasProject.route('/projects').get(async (req, res) => {
   })
 });
 
-rutasProject.route('/projectById').get(async (req, res) => {
-  const proyectoId='ckzskehrx0120z8rnl04hb9ad'
-  //const {proyectoId} = req.body;
+rutasProject.route('/project/:id').get(async (req, res) => {
   const currUser = auth.isAuth(req.headers.user);
   currUser.then(async (loggedUser)=>{
     if (loggedUser && loggedUser.role === 'Administrador') {
       try {    
         const proyecto = await prisma.project.findUnique({
-          where: {
-            id: proyectoId
-          }
+          where: { id: `${req.params.enterpriseId}` }
         });
     
         res.status(201).send({ status: 'ok', proyecto});
@@ -68,7 +68,7 @@ rutasProject.route('/project').post(async (req, res) => {
     
         res.status(201).send({ status: 'ok', proyecto: nuevoProyecto});
       } catch {
-        res.status(500).send({ status: 'error' });
+        res.status(500).send({ status: 'error crear' });
       }
     }else{ 
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
