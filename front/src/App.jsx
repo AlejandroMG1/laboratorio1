@@ -15,6 +15,7 @@ import 'styles/globals.css';
 import Issues from 'pages/issue/Issues';
 import Usuarios from 'pages/usuario/Usuarios';
 import DetallesProyecto from 'pages/proyecto/DetallesProyecto';
+import { getAuthData } from 'servicios/auth';
 
 async function login(data) {
   return fetch('http://localhost:4000/login', {
@@ -36,6 +37,7 @@ const App = () => {
     login({ email }).then((response) => {
       if (response.status === 'ok') {
         setAuth(response.user);
+        getAuthData(response.user);
       } else {
         setError('Usuario no valido');
       }

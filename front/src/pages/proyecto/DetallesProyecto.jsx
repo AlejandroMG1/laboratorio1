@@ -3,13 +3,14 @@
 import Issues from 'pages/issue/Issues';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { auth } from 'servicios/auth';
 import { getbyidProyecto } from 'servicios/proyecto';
 
 const DetallesProyecto = () => {
   const { id } = useParams();
   const [proyecto, getProyecto] = useState({});
   useEffect(async () => {
-    getProyecto(await getbyidProyecto(id));
+    getProyecto(await getbyidProyecto(id, auth.id));
   }, []);
 
   return (

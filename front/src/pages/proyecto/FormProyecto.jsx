@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { getAllEmpresas } from 'servicios/empresa';
 import { crearProyecto } from 'servicios/proyecto';
+import { auth } from 'servicios/auth';
 
 const FormProyecto = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const FormProyecto = () => {
   const [descripción, setDescripción] = useState('');
 
   useEffect(async () => {
-    const res = await getAllEmpresas();
+    const res = await getAllEmpresas(auth.id);
     setoptionsEmpresa(
       res.map((empresaItem) => ({
         value: empresaItem.id,
@@ -29,7 +30,10 @@ const FormProyecto = () => {
     e.preventDefault();
 
     try {
-      const res = await crearProyecto({ nombre, empresa, descripción });
+      const res = await crearProyecto(
+        { nombre, empresa, descripción },
+        auth.id
+      );
       toast.success('Proyecto creado');
       navigate('/Proyectos');
     } catch {
