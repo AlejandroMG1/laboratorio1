@@ -15,9 +15,8 @@ export const getAllProyectos = async (user) => {
 export const getbyidProyecto = async (proyectoId, user) => {
   const options = {
     method: 'GET',
-    url: 'http://localhost:4000/projectById',
+    url: `http://localhost:4000/project/${proyectoId}`,
     headers: { 'Content-type': 'application/json', user },
-    data: { proyectoId },
   };
 
   const respuesta = await axios.request(options);

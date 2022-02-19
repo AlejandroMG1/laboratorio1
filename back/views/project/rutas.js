@@ -37,7 +37,7 @@ rutasProject.route('/project/:id').get(async (req, res) => {
     if (loggedUser && loggedUser.role === 'Administrador') {
       try {    
         const proyecto = await prisma.project.findUnique({
-          where: { id: `${req.params.enterpriseId}` }
+          where: { id: `${req.params.id}` }
         });
     
         res.status(201).send({ status: 'ok', proyecto});

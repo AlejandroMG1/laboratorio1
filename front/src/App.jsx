@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CrearEmpresa from 'pages/empresa/CrearEmpresa';
 import FormProyecto from 'pages/proyecto/FormProyecto';
 import CrearUsuario from 'pages/usuario/CrearUsuario';
-import CrearIssue from 'pages/issue/CrearIssue';
+import FormIssue from 'pages/issue/FormIssue';
 import LoginForm from 'pages/Login';
 import Proyectos from 'pages/proyecto/Proyectos';
 import PublicLayout from 'layouts/PublicLayout';
@@ -56,7 +56,7 @@ const App = () => {
           )}
           <Route path='CrearProyecto' element={<FormProyecto />} />
           <Route path='CrearUsuario' element={<CrearUsuario />} />
-          <Route path='CrearIssue' element={<CrearIssue />} />
+          <Route path='CrearIssue' element={<FormIssue />} />
           <Route path='Proyectos' element={<Proyectos />} />
           <Route path='Issues' element={<Issues />} />
           <Route path='Usuarios' element={<Usuarios />} />

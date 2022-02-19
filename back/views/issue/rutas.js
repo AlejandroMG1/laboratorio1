@@ -205,7 +205,7 @@ rutasIssue.route("/projectIssues/:id").get(async (req, res) => {
     console.log(issues)
     console.log('aaaa')
     res.status(200).send(issues);
-  } catch (err) {}
+  } catch (err) {console.log(err)}
 });
 
 export { rutasIssue };
