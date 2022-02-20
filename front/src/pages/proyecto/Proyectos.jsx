@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getAllProyectos } from 'servicios/proyecto';
 import CabeceraList from 'components/CabeceraList';
 import { auth } from 'servicios/auth';
+import Loading from 'components/Loading';
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -30,6 +31,8 @@ const Proyectos = () => {
             <span>Agregar Proyecto</span>
           </div>
         </Link>
+
+        <Loading />
 
         {proyectos.map((proyecto) => (
           <ItemProyecto proyecto={proyecto} />

@@ -33,7 +33,7 @@ const Issues = ({ id }) => {
             <span>Status</span>
           </div>
         </div>
-        <Link to={`FormIssue/${id}`}>
+        <Link to={`/CrearIssue/${id}`}>
           <div className=' flex items-center rounded-md border-colorNegro border-2 w-full h-[50px] px-3 hover:bg-[#d9e0ed] cursor-pointer'>
             <span>Agregar Issue</span>
           </div>
