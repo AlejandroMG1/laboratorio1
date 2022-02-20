@@ -9,11 +9,15 @@ const ItemProyecto = ({ proyecto }) => (
         {proyecto.clientEnterprise.name}
       </span>
       <div className='flex flex-row items-center relative pr-20 w-[450px] justify-between'>
-        <span className='text-center text-colorNegro'>{proyecto.issues}</span>
         <span className='text-center text-colorNegro'>
-          {proyecto.developers}
+          {proyecto.issues.length}
         </span>
-        <span className='text-center text-colorNegro'>{proyecto.clients}</span>
+        <span className='text-center text-colorNegro'>
+          {proyecto.developers.length}
+        </span>
+        <span className='text-center text-colorNegro'>
+          {proyecto.clients.length}
+        </span>
       </div>
     </div>
   </Link>

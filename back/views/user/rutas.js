@@ -33,7 +33,11 @@ rutasUser.route('/users').get(async (req, res) => {
   currUser.then(async (loggedUser)=>{
     if (loggedUser && loggedUser.role === 'Administrador') {
       try {
-        const usuarios = await prisma.user.findMany();
+        const usuarios = await prisma.user.findMany({
+          include: {
+            enterprise: true
+          }
+        });
         res.status(200).json({ usuarios });
       } catch (err) {
         res.status(500).send({ status: 'error obteniendo' });
@@ -73,13 +77,15 @@ rutasUser.route('/user').post(async (req, res) => {
   })
 });
 
-rutasUser.route('/getAllClientesbyProyect/:id').get(async (req, res) => {  
+rutasUser.route('/usersAllDevelopers').get(async (req, res) => {  
   const currUser = auth.isAuth(req.headers.user);
   currUser.then(async (loggedUser)=>{
     if (loggedUser && loggedUser.role === 'Administrador') {
       try {
         const usuarios = await prisma.user.findMany({
-          where: {enterpriseId: `${req.params.id}`}
+          where: {
+            role: 'Desarrollador'
+          }
         });
         res.status(200).json({ usuarios });
       } catch (err) {
@@ -93,16 +99,25 @@ rutasUser.route('/getAllClientesbyProyect/:id').get(async (req, res) => {
   })
 });
 
-rutasUser.route('/getAllDevelopersbyProyect/:id').get(async (req, res) => {  
+rutasUser.route('/usersAllClientesbyEmpresa/:id').get(async (req, res) => {  
   const currUser = auth.isAuth(req.headers.user);
   currUser.then(async (loggedUser)=>{
     if (loggedUser && loggedUser.role === 'Administrador') {
       try {
+        const empresa  = await prisma.project.findUnique({
+          where: {id: `${req.params.id}`},
+          select: {
+            clientEnterpriseId: true
+          }
+        })
+        console.log(empresa)
         const usuarios = await prisma.user.findMany({
-          where: {enterpriseId: `${req.params.id}`}
+          where: {enterpriseId: empresa.clientEnterpriseId, role: 'Cliente'
+          }
         });
         res.status(200).json({ usuarios });
       } catch (err) {
+        console.log(err)
         res.status(500).send({ status: 'error obteniendo' });
       }
     } else {
@@ -112,5 +127,7 @@ rutasUser.route('/getAllDevelopersbyProyect/:id').get(async (req, res) => {
     res.status(404).send({ status: 'error logged user' });
   })
 });
+
+
 
 export { rutasUser };

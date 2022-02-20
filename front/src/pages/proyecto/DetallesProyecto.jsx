@@ -22,7 +22,11 @@ const DetallesProyecto = () => {
           {proyecto.description}
         </p>
       </div>
-      <NavDetalleProyecto id={id} />
+      <NavDetalleProyecto
+        id={id}
+        clientes={proyecto.clients}
+        developers={proyecto.developers}
+      />
     </div>
   );
 };

@@ -1,3 +1,5 @@
+/* eslint-disable no-const-assign */
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
@@ -7,14 +9,15 @@ import { auth } from 'servicios/auth';
 import Dialog from '@mui/material/Dialog';
 import {
   getAllUsers,
-  getAllClientesbyProyect,
-  getAllDevelopersbyProyect,
+  getAllDevelopers,
+  getAllClientesbyEmpresa,
 } from 'servicios/usuer';
 import { Link, useNavigate } from 'react-router-dom';
 import SelectForm from 'components/SelectForm';
 import ButtonForm from 'components/ButtonForm';
+import { addDeveloper, addCliente } from 'servicios/proyecto';
 
-const Usuarios = ({ opt, id }) => {
+const Usuarios = ({ usuarios, id, opt }) => {
   const [users, setusers] = useState([]);
   const [optionUser, setOptionUser] = useState([]);
   const [user, setUser] = useState([]);
@@ -24,28 +27,54 @@ const Usuarios = ({ opt, id }) => {
   useEffect(async () => {
     switch (opt) {
       case 1:
-        setusers(await getAllClientesbyProyect(auth.id, id));
-        setTitle('Usuarios');
+        setTitle('Clientes');
+        setusers(usuarios);
         break;
       case 2:
-        setusers(await getAllDevelopersbyProyect(auth.id, id));
         setTitle('Desarrolladores');
+        setusers(usuarios);
         break;
       default:
         setusers(await getAllUsers(auth.id));
-        setTitle('Clientes');
+        setTitle('Usuarios');
     }
   }, [opt]);
 
-  const onClickAgregar = () => {
-    if (opt === 1) {
-      setDialog(true);
-    } else {
-      navigate('/CrearUsuario');
+  const onClickAgregar = async () => {
+    let res;
+    switch (opt) {
+      case 1:
+        setDialog(true);
+        res = await getAllClientesbyEmpresa(id, auth.id);
+        setOptionUser(
+          res.map((clientesItem) => ({
+            value: clientesItem.id,
+            label: clientesItem.email,
+          }))
+        );
+        break;
+      case 2:
+        setDialog(true);
+        res = await getAllDevelopers(auth.id);
+        setOptionUser(
+          res.map((developerItem) => ({
+            value: developerItem.id,
+            label: developerItem.email,
+          }))
+        );
+        break;
+      default:
+        navigate('/CrearUsuario');
     }
   };
 
-  const agregarUser = () => {};
+  const agregarUser = async () => {
+    if (opt) {
+      await addCliente(id, user, auth.id);
+    } else {
+      await addDeveloper(id, user, auth.id);
+    }
+  };
 
   return (
     <div className='flex flex-col pt-8 px-16  w-full'>
@@ -68,15 +97,23 @@ const Usuarios = ({ opt, id }) => {
           <ItemUsuario usuario={userItem} />
         ))}
       </div>
-      <Dialog open={dialog}>
-        <SelectForm
-          title={title}
-          options={optionUser}
-          onChange={(e) => {
-            setUser(e.value);
-          }}
-        />
-        <ButtonForm text='Agregar' submit={false} onclick={agregarUser} />
+
+      <Dialog
+        open={dialog}
+        onClose={() => {
+          setDialog(false);
+        }}
+      >
+        <div className='div div-col w-[500px] p-14'>
+          <SelectForm
+            title={title}
+            options={optionUser}
+            onChange={(e) => {
+              setUser(e.value);
+            }}
+          />
+          <ButtonForm text='Agregar' submit={false} onclick={agregarUser} />
+        </div>
       </Dialog>
     </div>
   );

@@ -13,17 +13,6 @@ export const getAllIssuesByProyect = async (id, user) => {
 export const getAllIssuesByUser = async (user) => {
   const options = {
     method: 'GET',
-    url: 'http://localhost:4000/issues',
-    headers: { 'Content-type': 'application/json', user },
-  };
-
-  const respuesta = await axios.request(options);
-  return respuesta.data.issues;
-};
-
-export const getAllIssues = async (user) => {
-  const options = {
-    method: 'GET',
     url: 'http://localhost:4000/issue',
     headers: { 'Content-type': 'application/json', user },
   };

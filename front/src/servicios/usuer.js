@@ -28,11 +28,10 @@ export const getAllUsers = async (user) => {
   const respuesta = await axios.request(options);
   return respuesta.data.usuarios;
 };
-
-export const getAllClientesbyProyect = async (user, id) => {
+export const getAllDevelopers = async (user) => {
   const options = {
     method: 'GET',
-    url: `http://localhost:4000/getAllClientesbyProyect/${id}`,
+    url: 'http://localhost:4000/usersAllDevelopers',
     headers: { 'Content-type': 'application/json', user },
   };
 
@@ -40,10 +39,10 @@ export const getAllClientesbyProyect = async (user, id) => {
   return respuesta.data.usuarios;
 };
 
-export const getAllDevelopersbyProyect = async (user, id) => {
+export const getAllClientesbyEmpresa = async (proyectoId, user) => {
   const options = {
     method: 'GET',
-    url: `http://localhost:4000/getAllDevelopersbyProyect/${id}`,
+    url: `http://localhost:4000/usersAllClientesbyEmpresa/${proyectoId}`,
     headers: { 'Content-type': 'application/json', user },
   };
 

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ButtonForm from 'components/ButtonForm';
 import ListDetalleProyecto from 'components/ListDetalleProyecto';
 
-const NavDetalleProyecto = ({ id }) => {
+const NavDetalleProyecto = ({ id, clientes, developers }) => {
   const [opt, setOpt] = useState(3);
 
   return (
@@ -33,7 +33,12 @@ const NavDetalleProyecto = ({ id }) => {
           }}
         />
       </div>
-      <ListDetalleProyecto opt={opt} id={id} />
+      <ListDetalleProyecto
+        opt={opt}
+        id={id}
+        clientes={clientes}
+        developers={developers}
+      />
     </div>
   );
 };
