@@ -112,6 +112,7 @@ rutasIssue.route("/issue").post(async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 rutasIssue.route("/issue:id").patch(async (req, res) => {
   const { category, priority, developer, hourEstimate, status } = req.body;
   auth
