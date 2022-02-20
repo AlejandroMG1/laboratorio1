@@ -16,6 +16,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SelectForm from 'components/SelectForm';
 import ButtonForm from 'components/ButtonForm';
 import { addDeveloper, addCliente } from 'servicios/proyecto';
+import Loading from 'components/Loading';
 
 const Usuarios = ({ usuarios, id, opt }) => {
   const [users, setusers] = useState([]);
@@ -23,6 +24,8 @@ const Usuarios = ({ usuarios, id, opt }) => {
   const [user, setUser] = useState([]);
   const [title, setTitle] = useState('');
   const [dialog, setDialog] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadingDialog, setLoadingDialog] = useState(true);
   const navigate = useNavigate();
   useEffect(async () => {
     switch (opt) {
@@ -38,6 +41,7 @@ const Usuarios = ({ usuarios, id, opt }) => {
         setusers(await getAllUsers(auth.id));
         setTitle('Usuarios');
     }
+    setLoading(false);
   }, [opt]);
 
   const onClickAgregar = async () => {
@@ -52,6 +56,7 @@ const Usuarios = ({ usuarios, id, opt }) => {
             label: clientesItem.email,
           }))
         );
+        setLoadingDialog(false);
         break;
       case 2:
         setDialog(true);
@@ -62,6 +67,7 @@ const Usuarios = ({ usuarios, id, opt }) => {
             label: developerItem.email,
           }))
         );
+        setLoadingDialog(false);
         break;
       default:
         navigate('/CrearUsuario');
@@ -75,6 +81,10 @@ const Usuarios = ({ usuarios, id, opt }) => {
       await addDeveloper(id, user, auth.id);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex flex-col pt-8 px-16  w-full'>
@@ -105,14 +115,20 @@ const Usuarios = ({ usuarios, id, opt }) => {
         }}
       >
         <div className='div div-col w-[500px] p-14'>
-          <SelectForm
-            title={title}
-            options={optionUser}
-            onChange={(e) => {
-              setUser(e.value);
-            }}
-          />
-          <ButtonForm text='Agregar' submit={false} onclick={agregarUser} />
+          {loadingDialog ? (
+            <Loading />
+          ) : (
+            <>
+              <SelectForm
+                title={title}
+                options={optionUser}
+                onChange={(e) => {
+                  setUser(e.value);
+                }}
+              />
+              <ButtonForm text='Agregar' submit={false} onclick={agregarUser} />
+            </>
+          )}
         </div>
       </Dialog>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ItemIssue = ({ issue }) => (
-  <Link to={`DetallesIssue/${issue.id}`}>
+  <Link to={`/DetallesIssue/${issue.id}`}>
     <div className=' flex flex-row items-center w-full h-[50px] px-3 justify-between rounded-md  border-colorNegro border-2 hover:bg-[#d9e0ed] cursor-pointer'>
       <span className='text-center text-colorNegro'>{issue.description}</span>
       <span className='text-center text-colorNegro'>
