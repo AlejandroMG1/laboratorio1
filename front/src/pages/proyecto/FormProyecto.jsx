@@ -7,6 +7,7 @@ import { crearProyecto } from 'servicios/proyecto';
 import { auth } from 'servicios/auth';
 import BaseForm from 'components/BaseForm';
 import SelectForm from 'components/SelectForm';
+import Loading from 'components/Loading';
 
 const FormProyecto = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const FormProyecto = () => {
   const [nombre, setNombre] = useState('');
   const [empresa, setEmpresa] = useState('');
   const [descripción, setDescripción] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     const res = await getAllEmpresas(auth.id);
@@ -23,6 +25,7 @@ const FormProyecto = () => {
         label: empresaItem.name,
       }))
     );
+    setLoading(false);
   }, []);
 
   const onSubmit = async (e) => {
@@ -36,6 +39,10 @@ const FormProyecto = () => {
       toast.error('Error');
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <BaseForm

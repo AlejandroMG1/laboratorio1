@@ -7,9 +7,11 @@ import { crearUser } from 'servicios/usuer';
 import { auth } from 'servicios/auth';
 import { toast } from 'react-toastify';
 import { getAllEmpresas } from 'servicios/empresa';
+import Loading from 'components/Loading';
 
 const FormUsuario = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [optionsEmpresa, setoptionsEmpresa] = useState([]);
   const [empresa, setEmpresa] = useState('');
   const [email, setemail] = useState('');
@@ -52,7 +54,11 @@ const FormUsuario = () => {
         label: 'Cliente',
       },
     ]);
+    setLoading(false);
   }, []);
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <BaseForm

@@ -4,14 +4,20 @@ import { Link } from 'react-router-dom';
 import { getAllProyectos } from 'servicios/proyecto';
 import CabeceraList from 'components/CabeceraList';
 import { auth } from 'servicios/auth';
+import Loading from 'components/Loading';
 
 const Proyectos = () => {
+  const [loading, setLoading] = useState(true);
   const [proyectos, setProyectos] = useState([]);
 
   useEffect(async () => {
     setProyectos(await getAllProyectos(auth.id));
+    setLoading(false);
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className='flex flex-col pt-8 px-16  w-full'>
       <CabeceraList title='Proyectos' placeholder='proyecto' />
@@ -30,7 +36,6 @@ const Proyectos = () => {
             <span>Agregar Proyecto</span>
           </div>
         </Link>
-
         {proyectos.map((proyecto) => (
           <ItemProyecto proyecto={proyecto} />
         ))}
