@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios';
 
 export const crearUser = async (newUser, user) => {
@@ -21,6 +22,28 @@ export const getAllUsers = async (user) => {
   const options = {
     method: 'GET',
     url: 'http://localhost:4000/users',
+    headers: { 'Content-type': 'application/json', user },
+  };
+
+  const respuesta = await axios.request(options);
+  return respuesta.data.usuarios;
+};
+
+export const getAllClientesbyProyect = async (user, id) => {
+  const options = {
+    method: 'GET',
+    url: `http://localhost:4000/getAllClientesbyProyect/${id}`,
+    headers: { 'Content-type': 'application/json', user },
+  };
+
+  const respuesta = await axios.request(options);
+  return respuesta.data.usuarios;
+};
+
+export const getAllDevelopersbyProyect = async (user, id) => {
+  const options = {
+    method: 'GET',
+    url: `http://localhost:4000/getAllDevelopersbyProyect/${id}`,
     headers: { 'Content-type': 'application/json', user },
   };
 

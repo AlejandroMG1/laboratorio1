@@ -73,4 +73,44 @@ rutasUser.route('/user').post(async (req, res) => {
   })
 });
 
+rutasUser.route('/getAllClientesbyProyect/:id').get(async (req, res) => {  
+  const currUser = auth.isAuth(req.headers.user);
+  currUser.then(async (loggedUser)=>{
+    if (loggedUser && loggedUser.role === 'Administrador') {
+      try {
+        const usuarios = await prisma.user.findMany({
+          where: {enterpriseId: `${req.params.id}`}
+        });
+        res.status(200).json({ usuarios });
+      } catch (err) {
+        res.status(500).send({ status: 'error obteniendo' });
+      }
+    } else {
+      res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
+    }
+  }).catch(() => {
+    res.status(404).send({ status: 'error logged user' });
+  })
+});
+
+rutasUser.route('/getAllDevelopersbyProyect/:id').get(async (req, res) => {  
+  const currUser = auth.isAuth(req.headers.user);
+  currUser.then(async (loggedUser)=>{
+    if (loggedUser && loggedUser.role === 'Administrador') {
+      try {
+        const usuarios = await prisma.user.findMany({
+          where: {enterpriseId: `${req.params.id}`}
+        });
+        res.status(200).json({ usuarios });
+      } catch (err) {
+        res.status(500).send({ status: 'error obteniendo' });
+      }
+    } else {
+      res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
+    }
+  }).catch(() => {
+    res.status(404).send({ status: 'error logged user' });
+  })
+});
+
 export { rutasUser };
