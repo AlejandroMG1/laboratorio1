@@ -49,8 +49,16 @@ rutasProject.route("/project/:id").get(async (req, res) => {
           const proyecto = await prisma.project.findUnique({
             where: { id: `${req.params.id}` },
             include: {
-              clients: true,
-              developers: true,
+              clients: {
+                include: {
+                  enterprise: true
+                }
+              },
+              developers: {
+                include: {
+                  enterprise: true
+                }
+              },
               issues: true,
             },
           });
@@ -160,12 +168,14 @@ rutasProject.route("/addProjectUser").post(async (req, res) => {
         where: { id: projectId },
         data: { clients: { connect: { id: userId } } },
       });
+      console.log('ok Cliente')
       res.status(201).send({ status: "ok" });
     } else if (user.role === "Desarrollador") {
       await prisma.project.update({
         where: { id: projectId },
         data: { developers: { connect: { id: userId } } },
       });
+      console.log('ok Desarrollador')
       res.status(201).send({ status: "ok" });
     }
   } catch (err) {
