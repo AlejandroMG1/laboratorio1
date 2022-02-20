@@ -11,9 +11,17 @@ const FormIssue = () => {
   const [proyecto, setproyecto] = useState('');
   const [optionsDevelopers, setoptionsDevelopers] = useState([]);
   const [developer, setdeveloper] = useState('');
-  const [optionsCategoria, setoptionsCategoria] = useState([]);
+  const [optionsCategoria, setoptionsCategoria] = useState([
+    'MissingTask',
+    'Bug',
+    'Additional',
+  ]);
   const [Categoria, setCategoria] = useState('');
-  const [optionsPrioridad, setoptionsPrioridad] = useState([]);
+  const [optionsPrioridad, setoptionsPrioridad] = useState([
+    'Low',
+    'Medium',
+    'High',
+  ]);
   const [prioridad, setprioridad] = useState('');
   const [optionsStatus, setoptionsStatus] = useState([]);
   const [status, setstatus] = useState('');
