@@ -24,7 +24,7 @@ rutasUser.route('/users/:enterpriseId').get(async (req, res) => {
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch(() => {
-    res.status(404).send({ status: 'error logged user' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 
@@ -46,7 +46,7 @@ rutasUser.route('/users').get(async (req, res) => {
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch(() => {
-    res.status(404).send({ status: 'error logged user' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 
@@ -73,7 +73,7 @@ rutasUser.route('/user').post(async (req, res) => {
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch((err) => {
-    res.status(404).send({ status: 'error' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 
@@ -95,7 +95,7 @@ rutasUser.route('/usersAllDevelopers').get(async (req, res) => {
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch(() => {
-    res.status(404).send({ status: 'error logged user' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 
@@ -124,7 +124,7 @@ rutasUser.route('/usersAllClientesbyEmpresa/:id').get(async (req, res) => {
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch(() => {
-    res.status(404).send({ status: 'error logged user' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 

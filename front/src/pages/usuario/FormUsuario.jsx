@@ -12,11 +12,11 @@ import Loading from 'components/Loading';
 const FormUsuario = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [optionsEmpresa, setoptionsEmpresa] = useState([]);
+  const [optionsEmpresa, setOptionsEmpresa] = useState([]);
   const [empresa, setEmpresa] = useState('');
-  const [email, setemail] = useState('');
-  const [optionsRole, setoptionsRole] = useState([]);
-  const [role, setrole] = useState('');
+  const [email, setEmail] = useState('');
+  const [optionsRole, setOptionsRole] = useState([]);
+  const [role, setRole] = useState('');
   const submitForm = async (e) => {
     e.preventDefault();
     try {
@@ -31,20 +31,22 @@ const FormUsuario = () => {
       toast.success('User creado');
       navigate('/Usuarios');
     } catch {
-      toast.error('Error');
+      toast.error(
+        'Error al crear el usuario verifique la información y que el usuario no exista'
+      );
     }
   };
 
   useEffect(async () => {
     const res = await getAllEmpresas(auth.id);
-    setoptionsEmpresa(
+    setOptionsEmpresa(
       res.map((empresaItem) => ({
         value: empresaItem.id,
         label: empresaItem.name,
       }))
     );
 
-    setoptionsRole([
+    setOptionsRole([
       {
         value: 'Desarrollador',
         label: 'Desarrollador',
@@ -65,6 +67,7 @@ const FormUsuario = () => {
       title='Nuevo usuario'
       onSubmit={submitForm}
       titleSubmit='Crear usuario'
+      showCancel
       onCancelar={() => {
         navigate('/Usuarios');
       }}
@@ -76,7 +79,7 @@ const FormUsuario = () => {
         type='email'
         value={email}
         onChange={(e) => {
-          setemail(e.target.value);
+          setEmail(e.target.value);
         }}
       />
 
@@ -91,7 +94,7 @@ const FormUsuario = () => {
         title='Rol'
         options={optionsRole}
         onChange={(e) => {
-          setrole(e.value);
+          setRole(e.value);
         }}
       />
     </BaseForm>

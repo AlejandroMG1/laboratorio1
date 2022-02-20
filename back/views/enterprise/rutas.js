@@ -17,20 +17,20 @@ rutasEnterprise.route('/getAllEnterprises').get(async (req, res) => {
     
         res.status(201).send({ status: 'ok', empresas});
       } catch {
-        res.status(500).send({ status: 'error' });
+        res.status(500).send({ status: 'error', message: 'Error al obtener las empresas' });
       }
     } else{ 
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch((err) => {
-    res.status(404).send({ status: 'error' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 
 rutasEnterprise.route('/enterprise/:enterpriseId').get(async (req, res) => {
   const currUser = auth.isAuth(req.headers.user);
   currUser.then(async (loggedUser)=>{
-    if (loggedUser && loggedUser.role === 'Administrador') {
+    if (loggedUser && loggedUser.role === 'Cliente') {
       try {    
         const empresa = await prisma.enterprise.findUnique({
           where: { id: `${req.params.enterpriseId}` }
@@ -38,13 +38,13 @@ rutasEnterprise.route('/enterprise/:enterpriseId').get(async (req, res) => {
     
         res.status(201).send({ status: 'ok', empresa});
       } catch {
-        res.status(500).send({ status: 'error get' });
+        res.status(500).send({ status: 'error', message: 'Error al obtener empresa' });
       }
     } else{ 
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch((err) => {
-    res.status(404).send({ status: 'error' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 
@@ -68,21 +68,23 @@ rutasEnterprise.route('/enterprise').post(async (req, res) => {
             enterpriseId: nuevaEnterprise.id
           },
         });
-        res.status(201).send({ status: 'ok', empleado: nuevoEmpleado});
+        res.status(201).send({ status: 'ok', empresa: nuevaEnterprise, empleado: nuevoEmpleado});
       } catch(err){
         if(nuevaEnterprise){
           await prisma.enterprise.delete({
             where: {id: nuevaEnterprise.id}
           })
+          console.log(err)
+          res.status(500).send({ status: 'error', message: 'Creando, usuario ya existe' });
         }
-        res.status(500).send({ status: 'error Creando, verifique la informacion' });
+        res.status(500).send({ status: 'error', message: 'Error creando' });
         
       }
     }else{ 
       res.status(401).send({ status: 'error Permisos', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch(() => {
-    res.status(404).send({ status: 'error Logged User' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 
@@ -92,14 +94,14 @@ rutasEnterprise.route('/enterprise/:id').patch(async (req, res) => {
   currUser.then(async (currUser)=>{
     if (currUser && currUser.role == 'Cliente' && currUser.enterpriseId === enterprise.id ) {
       try {
-        const enterprise = await prisma.enterprise.update({
+        const empresa = await prisma.enterprise.update({
           where: {id: enterprise.id},
           data: {
             name:enterprise.name,
           },
         });
     
-        res.status(201).send({ status: 'ok', enterprise});
+        res.status(201).send({ status: 'ok', empresa});
       } catch {
         res.status(500).send({ status: 'error Actualizar Enterprise' });
       }
@@ -107,7 +109,7 @@ rutasEnterprise.route('/enterprise/:id').patch(async (req, res) => {
       res.status(401).send({ status: 'error', message: 'No tiene los permisos necesarios para realizar la operacion'});
     }
   }).catch(() => {
-    res.status(404).send({ status: 'error Logged User' });
+    res.status(404).send({ status: 'error', message: 'Error sesion usuario' });
   })
 });
 

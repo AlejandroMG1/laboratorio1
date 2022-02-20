@@ -27,16 +27,22 @@ const LoginForm = ({ Login, error }) => {
         onSubmit={submitForm}
         className='flex flex-col gap-y-10 items-center'
       >
-        <div className='flex'>
+        <div className='flex flex-col'>
           <Input
-            text='Correo'
+            text=''
             name='Correo'
-            placeholder='Ingresa nombre de la empresa'
+            placeholder='Ingresa el correo'
             type='email'
           />
+          <div>
+            <span>{error}</span>
+          </div>
         </div>
-        <button className='button-submit' type='submit'>
-          Enviar Formulario
+        <button
+          className='button-submit border-2 p-1 border-colorNegro rounded'
+          type='submit'
+        >
+          Ingresar
         </button>
       </form>
     </div>

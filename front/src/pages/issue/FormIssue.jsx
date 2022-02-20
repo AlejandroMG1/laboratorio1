@@ -31,6 +31,7 @@ const FormIssue = () => {
       title='Nuevo issue'
       onSubmit={submitForm}
       titleSubmit='Crear issue'
+      showCancel
       onCancelar={() => {
         navigate('/issues');
       }}

@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CrearEmpresa from 'pages/empresa/CrearEmpresa';
+import EmpresaForm from 'pages/empresa/EmpresaForm';
 import FormProyecto from 'pages/proyecto/FormProyecto';
 import FormUsuario from 'pages/usuario/FormUsuario';
 import FormIssue from 'pages/issue/FormIssue';
@@ -15,34 +15,33 @@ import 'styles/globals.css';
 import Issues from 'pages/issue/Issues';
 import Usuarios from 'pages/usuario/Usuarios';
 import DetallesProyecto from 'pages/proyecto/DetallesProyecto';
-import { getAuthData } from 'servicios/auth';
+import { login, setAuthData } from 'servicios/auth';
 import DetallesIssue from 'pages/issue/DetallesIssue';
-
-async function login(data) {
-  return fetch('http://localhost:4000/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((er) => er);
-}
 
 const App = () => {
   const [auth, setAuth] = useState(null);
   const [error, setError] = useState('');
 
-  const Login = (email) => {
-    login({ email }).then((response) => {
-      if (response.status === 'ok') {
-        setAuth(response.user);
-        getAuthData(response.user);
-      } else {
-        setError('Usuario no valido');
+  const Login = async (email) => {
+    if (email) {
+      try {
+        const res = await login(email);
+        if (res.data.status === 'ok') {
+          setAuth(res.data.user);
+          setAuthData(res.data.user);
+        } else {
+          setError('Usuario no válido');
+        }
+      } catch {
+        setError('Usuario no válido');
       }
-    });
+    } else {
+      setError('Ingrese un email');
+    }
+  };
+
+  const Logout = () => {
+    setAuth(null);
   };
 
   if (!auth) {
@@ -51,22 +50,42 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<PublicLayout user={auth} />}>
+        <Route path='/' element={<PublicLayout user={auth} Logout={Logout} />}>
           {auth.role === 'Administrador' && (
-            <Route path='CrearEmpresa' element={<CrearEmpresa />} />
+            <>
+              <Route
+                path='CrearEmpresa'
+                element={<EmpresaForm auth={auth} />}
+              />
+              <Route path='CrearProyecto' element={<FormProyecto />} />
+              <Route path='CrearUsuario' element={<FormUsuario />} />
+              <Route path='CrearIssue/' element={<FormIssue />} />
+              <Route path='CrearIssue/:id' element={<FormIssue />} />
+              <Route path='Proyectos' element={<Proyectos />} />
+              <Route
+                path='Proyectos/DetallesProyecto/:id'
+                element={<DetallesProyecto />}
+              />
+            </>
           )}
-          <Route path='CrearProyecto' element={<FormProyecto />} />
-          <Route path='CrearUsuario' element={<FormUsuario />} />
-          <Route path='CrearIssue/' element={<FormIssue />} />
-          <Route path='CrearIssue/:id' element={<FormIssue />} />
-          <Route path='Proyectos' element={<Proyectos />} />
-          <Route path='Issues' element={<Issues />} />
+
+          {auth.role === 'Cliente' && (
+            <>
+              <Route
+                path='VerEmpresa'
+                element={
+                  <EmpresaForm empresaId={auth.enterpriseId} auth={auth} />
+                }
+              />
+              <Route path='CrearUsuario' element={<FormUsuario />} />
+              <Route path='Usuarios' element={<Usuarios />} />
+              <Route path='CrearIssue/' element={<FormIssue />} />
+              <Route path='CrearIssue/:id' element={<FormIssue />} />
+            </>
+          )}
+
           <Route path='Issues/DetallesIssue/:id' element={<DetallesIssue />} />
-          <Route path='Usuarios' element={<Usuarios />} />
-          <Route
-            path='Proyectos/DetallesProyecto/:id'
-            element={<DetallesProyecto />}
-          />
+          <Route path='Issues' element={<Issues />} />
         </Route>
       </Routes>
     </BrowserRouter>
