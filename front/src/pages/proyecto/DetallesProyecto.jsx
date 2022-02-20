@@ -1,3 +1,4 @@
+import Loading from 'components/Loading';
 import NavDetalleProyecto from 'components/NavDetalleProyecto';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -7,9 +8,15 @@ import { getbyidProyecto } from 'servicios/proyecto';
 const DetallesProyecto = () => {
   const { id } = useParams();
   const [proyecto, getProyecto] = useState({});
+  const [loading, setLoading] = useState(true);
   useEffect(async () => {
     getProyecto(await getbyidProyecto(id, auth.id));
+    setLoading(false);
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex flex-col w-full items-center'>

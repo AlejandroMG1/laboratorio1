@@ -1,8 +1,9 @@
-import React from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Loading = () => (
-  <div className='flex justify-center items-center'>
-    <div className='flex animate-spin w-10 h-10 border-2 rounded-full' />
+  <div className='flex flex-row items-center gap-10'>
+    <span className='text-3xl'>CARGANDO...</span>
+    <ClipLoader size={70} />
   </div>
 );
 

@@ -6,9 +6,11 @@ import CabeceraList from 'components/CabeceraList';
 import { getAllIssuesByUser, getAllIssuesByProyect } from 'servicios/issues';
 import { auth } from 'servicios/auth';
 import { Link } from 'react-router-dom';
+import Loading from 'components/Loading';
 
 const Issues = ({ id }) => {
   const [issues, setIssues] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     console.log(id);
@@ -17,7 +19,13 @@ const Issues = ({ id }) => {
     } else {
       setIssues(await getAllIssuesByUser(auth.id));
     }
+
+    setLoading(false);
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className='flex flex-col pt-8 px-16  w-full'>
