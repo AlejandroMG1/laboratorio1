@@ -7,10 +7,10 @@ import { getbyidProyecto } from 'servicios/proyecto';
 
 const DetallesProyecto = () => {
   const { id } = useParams();
-  const [proyecto, getProyecto] = useState({});
+  const [proyecto, setProyecto] = useState({});
   const [loading, setLoading] = useState(true);
   useEffect(async () => {
-    getProyecto(await getbyidProyecto(id, auth.id));
+    setProyecto(await getbyidProyecto(id, auth.id));
     setLoading(false);
   }, []);
 

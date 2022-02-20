@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable spaced-comment */
-/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import Image from 'assets/1.svg';
 import { NavLink } from 'react-router-dom';
@@ -10,7 +7,13 @@ const ButtonNav = ({ title, names, rutas }) => {
   const prueba = () => (
     <div className='flex flex-row gap-x-3 my-2 px-2 hover:bg-[#565555] rounded-[5px]'>
       <span className='my-2 text-[20px] text-colorBlanco'>{title}</span>
-      <img className='stroke-colorBlanco' src={Image} width='20' height='20' />
+      <img
+        className='stroke-colorBlanco'
+        src={Image}
+        width='20'
+        height='20'
+        alt='icono'
+      />
     </div>
   );
 

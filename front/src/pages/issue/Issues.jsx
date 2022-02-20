@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import ItemIssue from 'components/ItemIssue';
 import CabeceraList from 'components/CabeceraList';
@@ -13,7 +11,6 @@ const Issues = ({ id }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
-    console.log(id);
     if (id) {
       setIssues(await getAllIssuesByProyect(id, auth.id));
     } else {
@@ -35,9 +32,9 @@ const Issues = ({ id }) => {
           <span>Nombre de Issue</span>
           <span className='relative left-[20px]'>Proyecto</span>
           <div className='flex flex-row justify-between items-center relative w-[1000px] pr-20'>
-            <span>Developer</span>
-            <span>Categoria</span>
-            <span>Prioriada</span>
+            <span>Desarrollador</span>
+            <span>Categoría</span>
+            <span>Prioridad</span>
             <span>Status</span>
           </div>
         </div>
