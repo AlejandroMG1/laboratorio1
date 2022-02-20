@@ -15,7 +15,12 @@ rutasIssue.route("/issue").get(async (req, res) => {
       let issues;
       switch (user.role) {
         case "Administrador":
-          issues = await prisma.issue.findMany();
+          issues = await prisma.issue.findMany({
+            include: {
+              project: true,
+              developer: true
+            }
+          });
           break;
         case "Cliente":
           issues = await prisma.issue.findMany({
@@ -28,6 +33,10 @@ rutasIssue.route("/issue").get(async (req, res) => {
                 },
               },
             },
+            include: {
+              project: true,
+              developer: true
+            }
           });
           break;
         case "Desarrollador":
@@ -38,7 +47,7 @@ rutasIssue.route("/issue").get(async (req, res) => {
           });
           break;
       }
-      res.status(200).send({ issues });
+      res.status(200).send({issues});
     })
     .catch((err) => {
       res
@@ -103,12 +112,14 @@ rutasIssue.route("/issue").post(async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 rutasIssue.route("/issue:id").patch(async (req, res) => {
   const { category, priority, developer, hourEstimate, status } = req.body;
   auth
     .isAuth(req.headers.user)
     .then(async (user) => {
-      const { issue } = req.body;
+      const { id } = req.params;
+      const issue = await prisma.issue.findUnique({ where: { id: id } });
       let allowedStatus = [];
       let allowUpdateStatus = false;
       switch (user.role) {
@@ -187,7 +198,7 @@ rutasIssue.route("/issue:id").patch(async (req, res) => {
 
 rutasIssue.route("/projectIssues/:id").get(async (req, res) => {
   const user = await auth.isAuth(req.headers.user);
-  
+
   if (!user) {
     return res
       .status(401)
@@ -195,21 +206,17 @@ rutasIssue.route("/projectIssues/:id").get(async (req, res) => {
   }
   try {
     const { id } = req.params;
-    console.log(id);
     const issues = await prisma.issue.findMany({
       where: {
         projectId: id,
       },
+      include: {
+        developer: true,
+        project: true
+      }
     });
-
-    console.log(issues)
-    console.log('aaaa')
-    res.status(200).send(issues);
+    return res.status(200).send(issues);
   } catch (err) {}
 });
 
 export { rutasIssue };
-
-/*
-
-  */

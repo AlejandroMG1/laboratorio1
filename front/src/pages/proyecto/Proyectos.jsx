@@ -3,12 +3,13 @@ import ItemProyecto from 'components/ItemProyecto';
 import { Link } from 'react-router-dom';
 import { getAllProyectos } from 'servicios/proyecto';
 import CabeceraList from 'components/CabeceraList';
+import { auth } from 'servicios/auth';
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState([]);
 
   useEffect(async () => {
-    setProyectos(await getAllProyectos());
+    setProyectos(await getAllProyectos(auth.id));
   }, []);
 
   return (
@@ -26,7 +27,7 @@ const Proyectos = () => {
         </div>
         <Link to='/crearProyecto'>
           <div className=' flex items-center rounded-md border-colorNegro border-2 w-full h-[50px] px-3 hover:bg-[#d9e0ed] cursor-pointer'>
-            <span>Adregar Proyecto</span>
+            <span>Agregar Proyecto</span>
           </div>
         </Link>
 

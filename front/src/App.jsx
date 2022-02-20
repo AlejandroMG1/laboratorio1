@@ -6,8 +6,8 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CrearEmpresa from 'pages/empresa/CrearEmpresa';
 import FormProyecto from 'pages/proyecto/FormProyecto';
-import CrearUsuario from 'pages/usuario/CrearUsuario';
-import CrearIssue from 'pages/issue/CrearIssue';
+import FormUsuario from 'pages/usuario/FormUsuario';
+import FormIssue from 'pages/issue/FormIssue';
 import LoginForm from 'pages/Login';
 import Proyectos from 'pages/proyecto/Proyectos';
 import PublicLayout from 'layouts/PublicLayout';
@@ -15,6 +15,8 @@ import 'styles/globals.css';
 import Issues from 'pages/issue/Issues';
 import Usuarios from 'pages/usuario/Usuarios';
 import DetallesProyecto from 'pages/proyecto/DetallesProyecto';
+import { getAuthData } from 'servicios/auth';
+import DetallesIssue from 'pages/issue/DetallesIssue';
 
 async function login(data) {
   return fetch('http://localhost:4000/login', {
@@ -36,6 +38,7 @@ const App = () => {
     login({ email }).then((response) => {
       if (response.status === 'ok') {
         setAuth(response.user);
+        getAuthData(response.user);
       } else {
         setError('Usuario no valido');
       }
@@ -53,10 +56,12 @@ const App = () => {
             <Route path='CrearEmpresa' element={<CrearEmpresa />} />
           )}
           <Route path='CrearProyecto' element={<FormProyecto />} />
-          <Route path='CrearUsuario' element={<CrearUsuario />} />
-          <Route path='CrearIssue' element={<CrearIssue />} />
+          <Route path='CrearUsuario' element={<FormUsuario />} />
+          <Route path='CrearIssue/' element={<FormIssue />} />
+          <Route path='CrearIssue/:id' element={<FormIssue />} />
           <Route path='Proyectos' element={<Proyectos />} />
           <Route path='Issues' element={<Issues />} />
+          <Route path='Issues/DetallesIssue/:id' element={<DetallesIssue />} />
           <Route path='Usuarios' element={<Usuarios />} />
           <Route
             path='Proyectos/DetallesProyecto/:id'

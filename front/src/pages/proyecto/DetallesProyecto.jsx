@@ -1,15 +1,14 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-import Issues from 'pages/issue/Issues';
+import NavDetalleProyecto from 'components/NavDetalleProyecto';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { auth } from 'servicios/auth';
 import { getbyidProyecto } from 'servicios/proyecto';
 
 const DetallesProyecto = () => {
   const { id } = useParams();
   const [proyecto, getProyecto] = useState({});
   useEffect(async () => {
-    getProyecto(await getbyidProyecto(id));
+    getProyecto(await getbyidProyecto(id, auth.id));
   }, []);
 
   return (
@@ -23,7 +22,11 @@ const DetallesProyecto = () => {
           {proyecto.description}
         </p>
       </div>
-      <Issues opt={1} id={id} />
+      <NavDetalleProyecto
+        id={id}
+        clientes={proyecto.clients}
+        developers={proyecto.developers}
+      />
     </div>
   );
 };
