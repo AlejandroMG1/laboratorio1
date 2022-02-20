@@ -1,27 +1,21 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import ItemIssue from 'components/ItemIssue';
 import CabeceraList from 'components/CabeceraList';
-import {
-  getAllIssues,
-  getAllIssuesByProyect,
-  getAllIssuesByUser,
-} from 'servicios/issues';
+import { getAllIssuesByUser, getAllIssuesByProyect } from 'servicios/issues';
 import { auth } from 'servicios/auth';
 import { Link } from 'react-router-dom';
 
-const Issues = ({ opt, id }) => {
+const Issues = ({ id }) => {
   const [issues, setIssues] = useState([]);
 
   useEffect(async () => {
-    switch (opt) {
-      case 1:
-        setIssues(await getAllIssuesByProyect(id, auth.id));
-        break;
-      case 2:
-        setIssues(await getAllIssuesByUser(id, auth.id));
-        break;
-      default:
-        setIssues(await getAllIssues(auth.id));
+    console.log(id);
+    if (id) {
+      setIssues(await getAllIssuesByProyect(id, auth.id));
+    } else {
+      setIssues(await getAllIssuesByUser(auth.id));
     }
   }, []);
 

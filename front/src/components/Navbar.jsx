@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable no-restricted-imports */
 import React from 'react';
 import ButtonNav from 'components/ButtonNav';
 import logo from 'assets/2.svg';
@@ -10,7 +8,11 @@ const Navbar = (props) => {
   return (
     <nav className='flex flex-row w-full bg-colorNegro items-center px-4 justify-between '>
       <div className='flex items-center'>
-        <img className='h-12 w-12 stroke-colorBlanco' src={logo} />
+        <img
+          className='h-12 w-12 stroke-colorBlanco'
+          src={logo}
+          alt='logo Bit software'
+        />
         <span className='text-colorBlanco text-2xl pl-4'>Bit software</span>
       </div>
       <div className='flex flex-row gap-x-3 '>

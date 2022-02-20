@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-const { default: axios } = require('axios');
+import axios from 'axios';
 
 export const getAllProyectos = async (user) => {
   const options = {
@@ -34,6 +33,36 @@ export const crearProyecto = async (proyecto, user) => {
         clientEnterpriseId: proyecto.empresa,
         description: proyecto.descripción,
       },
+    },
+  };
+
+  const respuesta = await axios.request(options);
+  return respuesta;
+};
+
+export const addCliente = async (idProyecto, idUser, user) => {
+  const options = {
+    method: 'PATCH',
+    url: 'http://localhost:4000/addCliente',
+    headers: { 'Content-type': 'application/json', user },
+    data: {
+      idProyecto,
+      idUser,
+    },
+  };
+
+  const respuesta = await axios.request(options);
+  return respuesta;
+};
+
+export const addDeveloper = async (idProyecto, idUser, user) => {
+  const options = {
+    method: 'PATCH',
+    url: 'http://localhost:4000/addDeveloper',
+    headers: { 'Content-type': 'application/json', user },
+    data: {
+      idProyecto,
+      idUser,
     },
   };
 

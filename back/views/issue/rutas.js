@@ -15,7 +15,12 @@ rutasIssue.route("/issue").get(async (req, res) => {
       let issues;
       switch (user.role) {
         case "Administrador":
-          issues = await prisma.issue.findMany();
+          issues = await prisma.issue.findMany({
+            include: {
+              project: true,
+              developer: true
+            }
+          });
           break;
         case "Cliente":
           issues = await prisma.issue.findMany({
@@ -28,6 +33,10 @@ rutasIssue.route("/issue").get(async (req, res) => {
                 },
               },
             },
+            include: {
+              project: true,
+              developer: true
+            }
           });
           break;
         case "Desarrollador":
@@ -200,13 +209,13 @@ rutasIssue.route("/projectIssues/:id").get(async (req, res) => {
       where: {
         projectId: id,
       },
+      include: {
+        developer: true,
+        project: true
+      }
     });
     return res.status(200).send(issues);
   } catch (err) {}
 });
 
 export { rutasIssue };
-
-/*
-
-  */
