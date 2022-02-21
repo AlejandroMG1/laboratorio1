@@ -49,6 +49,7 @@ const FormProyecto = () => {
       title='Nuevo Proyecto'
       onSubmit={onSubmit}
       titleSubmit='Crear proyecto'
+      showCancel
       onCancelar={() => {
         navigate('/Proyectos');
       }}

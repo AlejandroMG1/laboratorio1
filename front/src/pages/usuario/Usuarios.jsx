@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-const-assign */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-vars */
@@ -15,10 +17,11 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import SelectForm from 'components/SelectForm';
 import ButtonForm from 'components/ButtonForm';
-import { addDeveloper, addCliente } from 'servicios/proyecto';
+import { addProjectUser, getbyidProyecto } from 'servicios/proyecto';
 import Loading from 'components/Loading';
+import { toast } from 'react-toastify';
 
-const Usuarios = ({ usuarios, id, opt }) => {
+const Usuarios = ({ id, opt }) => {
   const [users, setusers] = useState([]);
   const [optionUser, setOptionUser] = useState([]);
   const [user, setUser] = useState([]);
@@ -28,20 +31,7 @@ const Usuarios = ({ usuarios, id, opt }) => {
   const [loadingDialog, setLoadingDialog] = useState(true);
   const navigate = useNavigate();
   useEffect(async () => {
-    switch (opt) {
-      case 1:
-        setTitle('Clientes');
-        setusers(usuarios);
-        break;
-      case 2:
-        setTitle('Desarrolladores');
-        setusers(usuarios);
-        break;
-      default:
-        setusers(await getAllUsers(auth.id));
-        setTitle('Usuarios');
-    }
-    setLoading(false);
+    getUsers();
   }, [opt]);
 
   const onClickAgregar = async () => {
@@ -50,23 +40,13 @@ const Usuarios = ({ usuarios, id, opt }) => {
       case 1:
         setDialog(true);
         res = await getAllClientesbyEmpresa(id, auth.id);
-        setOptionUser(
-          res.map((clientesItem) => ({
-            value: clientesItem.id,
-            label: clientesItem.email,
-          }))
-        );
+        filtrarUser(res);
         setLoadingDialog(false);
         break;
       case 2:
         setDialog(true);
         res = await getAllDevelopers(auth.id);
-        setOptionUser(
-          res.map((developerItem) => ({
-            value: developerItem.id,
-            label: developerItem.email,
-          }))
-        );
+        filtrarUser(res);
         setLoadingDialog(false);
         break;
       default:
@@ -74,11 +54,46 @@ const Usuarios = ({ usuarios, id, opt }) => {
     }
   };
 
+  const filtrarUser = async (res) => {
+    const resFilter = res.filter(
+      (item) => users.findIndex((item2) => item2.email === item.email) === -1
+    );
+
+    setOptionUser(
+      resFilter.map((clientesItem) => ({
+        value: clientesItem.id,
+        label: clientesItem.email,
+      }))
+    );
+  };
+  const getUsers = async () => {
+    setLoading(true);
+    const res = await getbyidProyecto(id, auth.id);
+    switch (opt) {
+      case 1:
+        setTitle('Clientes');
+        setusers(res.clients);
+        break;
+      case 2:
+        setTitle('Desarrolladores');
+        setusers(res.developers);
+        break;
+      default:
+        setusers(await getAllUsers(auth.id));
+        setTitle('Usuarios');
+    }
+    setLoading(false);
+  };
+
   const agregarUser = async () => {
-    if (opt) {
-      await addCliente(id, user, auth.id);
-    } else {
-      await addDeveloper(id, user, auth.id);
+    try {
+      setDialog(false);
+      setLoading(true);
+      await addProjectUser(id, user, auth.id);
+      toast.success('Usuario Añadido');
+      getUsers();
+    } catch {
+      toast.error('Error');
     }
   };
 
@@ -111,10 +126,11 @@ const Usuarios = ({ usuarios, id, opt }) => {
       <Dialog
         open={dialog}
         onClose={() => {
+          setLoadingDialog(true);
           setDialog(false);
         }}
       >
-        <div className='div div-col w-[500px] p-14'>
+        <div className='div div-col w-[500px] p-14 overflow-visible'>
           {loadingDialog ? (
             <Loading />
           ) : (

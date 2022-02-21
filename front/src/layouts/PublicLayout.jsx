@@ -6,13 +6,13 @@ import Navbar from '../components/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
 
 const PublicLayout = (props) => {
-  const { user } = props;
+  const { Logout, user } = props;
   return (
-    <div className='w-full flex flex-col'>
-      <Navbar user={user} />
+    <div className='flex flex-col'>
+      <Navbar user={user} Logout={Logout} />
       <div className='h-full'>
         <Outlet />
-        <ToastContainer />
+        <ToastContainer autoClose={false} />
       </div>
     </div>
   );

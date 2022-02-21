@@ -7,7 +7,7 @@ const Input = ({
   type,
   value,
   onChange,
-  disable = false,
+  disabled,
   defaultValue = null,
 }) => (
   <div className='w-full'>
@@ -15,13 +15,13 @@ const Input = ({
       {text}
     </span>
     <input
-      className='block border border-grey-light w-full p-3 rounded mb-4'
+      className='block border border-grey-light w-full p-3 rounded mb-4 disabled:bg-colorNegro disabled:text-colorBlanco'
       name={name}
       type={type}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      disabled={disable}
+      disabled={disabled}
       defaultValue={defaultValue}
     />
   </div>
