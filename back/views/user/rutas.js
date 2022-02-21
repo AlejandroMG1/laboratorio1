@@ -40,13 +40,27 @@ rutasUser.route("/users").get(async (req, res) => {
   const currUser = auth.isAuth(req.headers.user);
   currUser
     .then(async (loggedUser) => {
-      if (loggedUser && loggedUser.role === "Administrador") {
+      if (loggedUser) {
         try {
-          const usuarios = await prisma.user.findMany({
-            include: {
-              enterprise: true,
-            },
-          });
+          let usuarios;
+          switch (loggedUser.role) {
+            case "Administrador":
+              usuarios = await prisma.user.findMany({
+                include: {
+                  enterprise: true,
+                },
+              });
+              break;
+            case "Cliente":
+              usuarios = await prisma.user.findMany({
+                where: { enterpriseId: loggedUser.enterpriseId },
+                include: {
+                  enterprise: true,
+                },
+              });
+            default:
+              break;
+          }
           res.status(200).json({ usuarios });
         } catch (err) {
           res.status(500).send({ status: "error obteniendo" });
