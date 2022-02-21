@@ -57,7 +57,7 @@ const FormProyecto = () => {
       <Input
         text='Nombre'
         name='nombre'
-        placeholder='Ingresa nombre de la empresa'
+        placeholder='Ingresa nombre de la proyecto'
         type='text'
         value={nombre}
         onChange={(e) => {

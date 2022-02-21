@@ -23,7 +23,7 @@ const DetallesProyecto = () => {
       <h1 className='text-4xl font-bold my-10  font-sans'>{proyecto.name}</h1>
       <div className='flex flex-col justify-center gap-6 mx-96'>
         <span className='text-lg text-center'>
-          {proyecto.clientEnterpriseId}
+          {proyecto.clientEnterprise.name}
         </span>
         <p className='block p-3 text-lg rounded mb-4 '>
           {proyecto.description}

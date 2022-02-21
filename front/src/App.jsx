@@ -12,15 +12,20 @@ import Issues from 'pages/issue/Issues';
 import Usuarios from 'pages/usuario/Usuarios';
 import DetallesProyecto from 'pages/proyecto/DetallesProyecto';
 import { login, setAuthData } from 'servicios/auth';
+import Loading from 'components/Loading';
+import Home from 'pages/home/home';
 
 const App = () => {
   const [auth, setAuth] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const Login = async (email) => {
     if (email) {
       try {
+        setLoading(true);
         const res = await login(email);
+        setLoading(false);
         if (res.data.status === 'ok') {
           setAuth(res.data.user);
           setAuthData(res.data.user);
@@ -28,6 +33,7 @@ const App = () => {
           setError('Usuario no válido');
         }
       } catch {
+        setLoading(false);
         setError('Usuario no válido');
       }
     } else {
@@ -38,6 +44,9 @@ const App = () => {
   const Logout = () => {
     setAuth(null);
   };
+  if (loading) {
+    return <Loading />;
+  }
 
   if (!auth) {
     return <LoginForm Login={Login} error={error} />;
@@ -46,6 +55,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<PublicLayout user={auth} Logout={Logout} />}>
+          <Route path='' element={<Home />} />
           {auth.role === 'Administrador' && (
             <>
               <Route
@@ -57,6 +67,7 @@ const App = () => {
               <Route path='CrearIssue/' element={<FormIssue />} />
               <Route path='CrearIssue/:id' element={<FormIssue />} />
               <Route path='Proyectos' element={<Proyectos />} />
+              <Route path='Usuarios' element={<Usuarios />} />
               <Route
                 path='Proyectos/DetallesProyecto/:id'
                 element={<DetallesProyecto />}
@@ -78,7 +89,7 @@ const App = () => {
               <Route path='CrearIssue/:id' element={<FormIssue />} />
             </>
           )}
-
+          <Route path='*' element={<Issues />} />
           <Route path='Issues/DetallesIssue/:id' element={<FormIssue />} />
           <Route path='Issues' element={<Issues />} />
         </Route>

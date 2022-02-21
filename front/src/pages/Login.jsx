@@ -1,8 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable no-restricted-imports */
-/* eslint-disable no-console */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import useFormData from 'hooks/useFormData';
 import Input from 'components/Input';
@@ -18,7 +13,7 @@ const LoginForm = ({ Login, error }) => {
 
   return (
     <div className='flex flex-col p-10 items-center'>
-      <img className='h-40 w-40' src={logo} />
+      <img className='h-40 w-40' src={logo} alt='logo' />
       <span className='text-5xl my-10'>Bit software</span>
       <h1 className='text-2xl font-bold text-gray-800 my-4'>Login</h1>
       <form

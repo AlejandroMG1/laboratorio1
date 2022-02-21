@@ -59,6 +59,7 @@ rutasProject.route("/project/:id").get(async (req, res) => {
                   enterprise: true
                 }
               },
+              clientEnterprise: true,
               issues: true,
             },
           });
