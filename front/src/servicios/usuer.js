@@ -39,6 +39,17 @@ export const getAllDevelopers = async (user) => {
   return respuesta.data.usuarios;
 };
 
+export const getProjectDevelopers = async (id, user) => {
+  const options = {
+    method: 'GET',
+    url: `http://localhost:4000/usersDevelopersByProject/${id}`,
+    headers: { 'Content-type': 'application/json', user },
+  };
+
+  const respuesta = await axios.request(options);
+  return respuesta.data.usuarios;
+};
+
 export const getAllClientesbyEmpresa = async (proyectoId, user) => {
   const options = {
     method: 'GET',

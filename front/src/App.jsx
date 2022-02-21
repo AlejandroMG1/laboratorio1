@@ -61,7 +61,7 @@ const App = () => {
           <Route path='CrearIssue/:id' element={<FormIssue />} />
           <Route path='Proyectos' element={<Proyectos />} />
           <Route path='Issues' element={<Issues />} />
-          <Route path='Issues/DetallesIssue/:id' element={<DetallesIssue />} />
+          <Route path='Issues/DetallesIssue/:id' element={<FormIssue />} />
           <Route path='Usuarios' element={<Usuarios />} />
           <Route
             path='Proyectos/DetallesProyecto/:id'

@@ -1,6 +1,15 @@
 import React from 'react';
 
-const Input = ({ text, name, placeholder, type, value, onChange }) => (
+const Input = ({
+  text,
+  name,
+  placeholder,
+  type,
+  value,
+  onChange,
+  disable = false,
+  defaultValue = null,
+}) => (
   <div className='w-full'>
     <span className='block text-gray-700 text-lg font-bold mb-2 ml-6'>
       {text}
@@ -12,6 +21,8 @@ const Input = ({ text, name, placeholder, type, value, onChange }) => (
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      disabled={disable}
+      defaultValue={defaultValue}
     />
   </div>
 );

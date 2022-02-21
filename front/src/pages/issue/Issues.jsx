@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import ItemIssue from 'components/ItemIssue';
 import CabeceraList from 'components/CabeceraList';
@@ -13,12 +11,10 @@ const Issues = ({ id }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
-    console.log(id);
     if (id) {
       setIssues(await getAllIssuesByProyect(id, auth.id));
     } else {
       setIssues(await getAllIssuesByUser(auth.id));
-      console.log(issues);
     }
 
     setLoading(false);

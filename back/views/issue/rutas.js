@@ -18,8 +18,8 @@ rutasIssue.route("/issue").get(async (req, res) => {
           issues = await prisma.issue.findMany({
             include: {
               project: true,
-              developer: true
-            }
+              developer: true,
+            },
           });
           break;
         case "Cliente":
@@ -35,8 +35,8 @@ rutasIssue.route("/issue").get(async (req, res) => {
             },
             include: {
               project: true,
-              developer: true
-            }
+              developer: true,
+            },
           });
           break;
         case "Desarrollador":
@@ -47,7 +47,59 @@ rutasIssue.route("/issue").get(async (req, res) => {
           });
           break;
       }
-      res.status(200).send({issues});
+      res.status(200).send({ issues });
+    })
+    .catch((err) => {
+      res
+        .status(401)
+        .send({ status: "Unauthorized", message: "no se ah autenticado" });
+    });
+});
+
+rutasIssue.route("/issue/:id").get(async (req, res) => {
+  auth
+    .isAuth(req.headers.user)
+    .then(async (user) => {
+      let issue;
+      const { id } = req.params;
+      switch (user.role) {
+        case "Administrador":
+          issue = await prisma.issue.findUnique({
+            where: { id: id },
+            include: {
+              project: true,
+              developer: true,
+            },
+          });
+          break;
+        case "Cliente":
+          issue = await prisma.issue.findMany({
+            where: {
+              id: id,
+              project: {
+                clientEnterprise: {
+                  users: {
+                    some: user,
+                  },
+                },
+              },
+            },
+            include: {
+              project: true,
+              developer: true,
+            },
+          });
+          break;
+        case "Desarrollador":
+          issue = await prisma.issue.findMany({
+            where: {
+              id: id,
+              developer: user,
+            },
+          });
+          break;
+      }
+      res.status(200).send({issue});
     })
     .catch((err) => {
       res
@@ -71,7 +123,7 @@ rutasIssue.route("/issue").post(async (req, res) => {
           data: {
             description: description,
             category: category,
-            dueDate: dueDate,
+            dueDate: new Date(dueDate),
             priority: priority,
             project: { connect: { id: project } },
           },
@@ -90,7 +142,7 @@ rutasIssue.route("/issue").post(async (req, res) => {
             data: {
               description: description,
               category: category,
-              dueDate: dueDate,
+              dueDate: new Date(dueDate),
               priority: priority,
               project: { connect: { id: project } },
             },
@@ -212,8 +264,8 @@ rutasIssue.route("/projectIssues/:id").get(async (req, res) => {
       },
       include: {
         developer: true,
-        project: true
-      }
+        project: true,
+      },
     });
     return res.status(200).send(issues);
   } catch (err) {}
