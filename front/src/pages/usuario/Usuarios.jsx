@@ -1,9 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable array-callback-return */
-/* eslint-disable no-const-assign */
-/* eslint-disable no-case-declarations */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import ItemUsuario from 'components/ItemUsuario';
 import CabeceraList from 'components/CabeceraList';
@@ -14,7 +8,7 @@ import {
   getAllDevelopers,
   getAllClientesbyEmpresa,
 } from 'servicios/usuer';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SelectForm from 'components/SelectForm';
 import ButtonForm from 'components/ButtonForm';
 import { addProjectUser, getbyidProyecto } from 'servicios/proyecto';
@@ -109,7 +103,7 @@ const Usuarios = ({ id, opt }) => {
           <span>Correo</span>
           <span className='relative pr-[50px]'>Empresa</span>
           <div className='flex flex-row justify-between items-center w-[450px] pr-20'>
-            <span>Role</span>
+            <span>Rol</span>
           </div>
         </div>
         <button type='button' onClick={onClickAgregar}>

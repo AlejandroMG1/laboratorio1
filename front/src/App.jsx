@@ -1,7 +1,3 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable no-console */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import EmpresaForm from 'pages/empresa/EmpresaForm';
