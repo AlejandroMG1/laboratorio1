@@ -11,7 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import SelectForm from 'components/SelectForm';
 import ButtonForm from 'components/ButtonForm';
-import { addProjectUser, getbyidProyecto } from 'servicios/proyecto';
+import { addProjectUser } from 'servicios/proyecto';
 import Loading from 'components/Loading';
 import { toast } from 'react-toastify';
 
@@ -62,18 +62,17 @@ const Usuarios = ({ id, opt }) => {
   };
   const getUsers = async () => {
     setLoading(true);
-    const res = await getbyidProyecto(id, auth.id);
+    if (opt !== 'Desarrolladores') {
+      setusers(await getAllUsers(auth.id));
+    }
     switch (opt) {
       case 1:
         setTitle('Clientes');
-        setusers(res.clients);
         break;
       case 2:
         setTitle('Desarrolladores');
-        setusers(res.developers);
         break;
       default:
-        setusers(await getAllUsers(auth.id));
         setTitle('Usuarios');
     }
     setLoading(false);
@@ -99,12 +98,10 @@ const Usuarios = ({ id, opt }) => {
     <div className='flex flex-col pt-8 px-16  w-full'>
       <CabeceraList title={title} placeholder='Usuario' />
       <div className='flex flex-col w-full gap-[2px] px-2 py-10'>
-        <div className=' flex flex-row items-center w-full h-[50px] px-3 justify-between'>
+        <div className=' grid grid-cols-3 items-center w-full h-[50px] px-3 justify-between'>
           <span>Correo</span>
-          <span className='relative pr-[50px]'>Empresa</span>
-          <div className='flex flex-row justify-between items-center w-[450px] pr-20'>
-            <span>Rol</span>
-          </div>
+          <span>Empresa</span>
+          <span>Rol</span>
         </div>
         <button type='button' onClick={onClickAgregar}>
           <div className=' flex items-center rounded-md border-colorNegro border-2 w-full h-[50px] px-3 hover:bg-[#d9e0ed] cursor-pointer'>
