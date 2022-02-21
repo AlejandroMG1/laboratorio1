@@ -84,7 +84,7 @@ const App = () => {
             </>
           )}
 
-          <Route path='Issues/DetallesIssue/:id' element={<DetallesIssue />} />
+          <Route path='Issues/DetallesIssue/:id' element={<FormIssue />} />
           <Route path='Issues' element={<Issues />} />
         </Route>
       </Routes>

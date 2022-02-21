@@ -5,7 +5,7 @@ const SelectForm = ({
   options,
   onChange,
   title,
-  disable = false,
+  disabled = false,
   defaultValue = null,
 }) => (
   <div className='w-full'>
@@ -16,7 +16,7 @@ const SelectForm = ({
       className='block border  border-grey-light w-full rounded mb-4'
       options={options}
       onChange={onChange}
-      isDisabled={disable}
+      isDisabled={disabled}
       defaultValue={defaultValue}
     />
   </div>

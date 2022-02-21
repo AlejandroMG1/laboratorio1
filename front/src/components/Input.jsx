@@ -8,7 +8,6 @@ const Input = ({
   value,
   onChange,
   disabled,
-  defaultValue = null,
 }) => (
   <div className='w-full'>
     <span className='block text-gray-700 text-lg font-bold mb-2 ml-6'>
@@ -22,7 +21,6 @@ const Input = ({
       value={value}
       onChange={onChange}
       disabled={disabled}
-      defaultValue={defaultValue}
     />
   </div>
 );
