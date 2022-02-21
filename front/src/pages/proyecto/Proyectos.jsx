@@ -27,7 +27,7 @@ const Proyectos = () => {
           <span className='left-[800px]'>Empresa</span>
           <div className='flex flex-row justify-between items-center w-[450px] pr-20'>
             <span>Issues</span>
-            <span>Develop</span>
+            <span>Desarrolladores</span>
             <span>Clientes</span>
           </div>
         </div>

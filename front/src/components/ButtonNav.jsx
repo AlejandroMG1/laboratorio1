@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable spaced-comment */
-/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, Transition } from '@headlessui/react';

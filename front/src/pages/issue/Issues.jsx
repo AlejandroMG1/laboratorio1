@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import ItemIssue from 'components/ItemIssue';
 import CabeceraList from 'components/CabeceraList';
@@ -13,7 +11,6 @@ const Issues = ({ id }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
-    console.log(id);
     if (id) {
       setIssues(await getAllIssuesByProyect(id, auth.id));
     } else {
@@ -32,22 +29,25 @@ const Issues = ({ id }) => {
       <CabeceraList title='Issues' placeholder='issue' />
       <div className='flex flex-col gap-[2px] px-2 py-10'>
         <div className=' flex flex-row items-center h-[50px] px-3 justify-between'>
-          <span>Nombre de Issue</span>
-          <span className='relative left-[20px]'>Proyecto</span>
-          <div className='flex flex-row justify-between items-center relative w-[1000px] pr-20'>
+          <div className='flex grid grid-cols-6 items-center relative w-full'>
+            <span>Descripción</span>
+            <span>Proyecto</span>
             <span>Developer</span>
-            <span>Categoria</span>
+            <span>Categoría</span>
             <span>Prioriada</span>
-            <span>Status</span>
+            <span className='text-center'>Status</span>
           </div>
         </div>
-        <Link to={`/CrearIssue/${id}`}>
-          <div className=' flex items-center rounded-md border-colorNegro border-2 w-full h-[50px] px-3 hover:bg-[#d9e0ed] cursor-pointer'>
-            <span>Agregar Issue</span>
-          </div>
-        </Link>
+        {auth.role !== 'Desarrollador' ? (
+          <Link to={`/CrearIssue/${id}`}>
+            <div className=' flex items-center rounded-md border-colorNegro border-2 w-full h-[50px] px-3 hover:bg-[#d9e0ed] cursor-pointer'>
+              <span>Agregar Issue</span>
+            </div>
+          </Link>
+        ) : null}
+
         {issues.map((issue) => (
-          <ItemIssue issue={issue} />
+          <ItemIssue key={issue.id} issue={issue} />
         ))}
       </div>
     </div>
