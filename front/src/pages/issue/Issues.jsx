@@ -29,12 +29,11 @@ const Issues = ({ id }) => {
       <CabeceraList title='Issues' placeholder='issue' />
       <div className='flex flex-col gap-[2px] px-2 py-10'>
         <div className=' flex flex-row items-center h-[50px] px-3 justify-between'>
-            <span>Categoría</span>
           <div className='flex grid grid-cols-6 items-center relative w-full'>
             <span>Descripción</span>
             <span>Proyecto</span>
             <span>Developer</span>
-            <span>Categoria</span>
+            <span>Categoría</span>
             <span>Prioriada</span>
             <span className='text-center'>Status</span>
           </div>
