@@ -26,10 +26,10 @@ const Issues = ({ id }) => {
 
   return (
     <div className='flex flex-col pt-8 px-16  w-full'>
-      <CabeceraList title='Issues' placeholder='issue' />
+      <CabeceraList title='Issues' />
       <div className='flex flex-col gap-[2px] px-2 py-10'>
         <div className=' flex flex-row items-center h-[50px] px-3 justify-between'>
-          <div className='flex grid grid-cols-6 items-center relative w-full'>
+          <div className='grid grid-cols-6 items-center relative w-full'>
             <span>Descripción</span>
             <span>Proyecto</span>
             <span>Developer</span>

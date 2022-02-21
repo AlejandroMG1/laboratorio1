@@ -3,12 +3,14 @@ import Input from 'components/Input';
 import BaseForm from 'components/BaseForm';
 import { getEmpresaById, saveEmpresa } from 'servicios/empresa';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const EmpresaForm = (props) => {
   const [enterpriseName, setEnterpriseName] = useState('');
   const [email, setEmail] = useState('');
   const [role] = useState('Cliente');
   const { empresaId, auth } = props;
+  const navigate = useNavigate();
   if (empresaId) {
     useEffect(async () => {
       const res = await getEmpresaById(empresaId, auth.id);
@@ -39,6 +41,7 @@ const EmpresaForm = (props) => {
       if (!empresaId) {
         toast.success(`Empleado creado - ${res.empleado.email}`);
       }
+      navigate('/Issues');
     } catch {
       toast.error(
         'Error al crear empresa, verifique que los campos están correctos y que el usuario no exista'

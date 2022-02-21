@@ -97,7 +97,7 @@ const Usuarios = ({ id, opt }) => {
 
   return (
     <div className='flex flex-col pt-8 px-16  w-full'>
-      <CabeceraList title={title} placeholder='Usuario' />
+      <CabeceraList title={title} />
       <div className='flex flex-col w-full gap-[2px] px-2 py-10'>
         <div className=' flex flex-row items-center w-full h-[50px] px-3 justify-between'>
           <span>Correo</span>
