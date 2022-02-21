@@ -1,5 +1,4 @@
 /* eslint-disable import/no-mutable-exports */
-/* eslint-disable no-console */
 import axios from 'axios';
 
 export let auth;

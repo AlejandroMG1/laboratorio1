@@ -1,7 +1,6 @@
 import React from 'react';
 import ButtonNav from 'components/ButtonNav';
 import logo from 'assets/2.svg';
-// import { Link } from 'react-router-dom';
 
 const navBarOptionsByRole = {
   Administrator: [

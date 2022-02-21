@@ -89,7 +89,6 @@ rutasUser.route("/user").post(async (req, res) => {
 
           res.status(201).send({ status: "ok", empleado: nuevoEmpleado });
         } catch (err) {
-          console.log(err);
           res.status(500).send({ status: "error" });
         }
       } else {

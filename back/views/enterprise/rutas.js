@@ -74,7 +74,6 @@ rutasEnterprise.route('/enterprise').post(async (req, res) => {
           await prisma.enterprise.delete({
             where: {id: nuevaEnterprise.id}
           })
-          console.log(err)
           res.status(500).send({ status: 'error', message: 'Creando, usuario ya existe' });
         }
         res.status(500).send({ status: 'error', message: 'Error creando' });

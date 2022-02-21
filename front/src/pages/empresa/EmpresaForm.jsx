@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import Input from 'components/Input';
 import BaseForm from 'components/BaseForm';
